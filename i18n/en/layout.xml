@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE i18n SYSTEM "http://myphpframework.com/dtd/i18n.dtd" >
+<i18n>
+    <country code="CA">
+        <text id="title">Web Admin</text>
+        <text id="encoding">utf8</text>
+        <text id="lang">en</text>
+        <text id="description">Web interface that lets your administer certain portion of the MyPhpFramework</text>
+        <text id="keywords">PHP,framework,admin,mpf,myphpframework</text>
+        <text id="author">Philippe Guilbault</text>
+        <text id="copyright">Yes plz.</text>
+        <text id="robots">NOINDEX, NOFOLLOW</text>
+
+        <text id="overview">MPF overview</text>
+    </country>
+</i18n>

@@ -1,0 +1,21 @@
+
+body > header > div,
+body > footer,
+#page {
+  width:90%;
+  margin: 0 auto;
+}
+
+body > header > nav ul {
+    margin: 0 auto;
+    display:block;
+    width: 625px;
+}
+
+body > header > nav li {
+    float: left;
+}
+
+body > header > nav a {
+    display:block;
+}

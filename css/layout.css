@@ -1,0 +1,160 @@
+
+body {
+    margin:0;
+    padding:0;
+}
+
+body > nav {
+    width: 240px;
+}
+
+body > header {
+    display:block;
+    padding: 18px;
+    height: 54px;
+    position: relative;
+    z-index: 500;
+}
+
+body > header > div {
+}
+
+body > header h1 {
+    margin:0;
+    display: block;
+    vertical-align: top;
+}
+
+body > header h1 a {
+    background: url("/mpf-admin/images/logo_small_white.png") no-repeat scroll 0 0 transparent;
+    width: 101px;
+    height: 50px;
+    display: block;
+    overflow: hidden;
+    text-indent: -9999px;
+}
+
+body > header h2 {
+    margin:0;
+    float:left;
+    font-size: 28px;
+    line-height: 50px;
+    color: white;
+    text-align: center;
+    margin-left: 24px;
+}
+
+#userErrors ul {
+    list-style: none;
+    margin: 0; padding: 0;
+    clear:both;
+}
+#userErrors ul li {
+    margin: 4px; padding: 4px;
+    display:block;
+    background-color: #f1caca;
+    border: 1px solid red;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    clear:both;
+}
+
+body > hr {
+    height:10px;
+    position: relative;
+    z-index: 500;
+    margin-left: 150px;
+}
+body > nav > hr {
+    height:10px;
+    position: relative;
+    z-index: 700;
+    margin-top: 90px;
+}
+body > footer {
+    clear:both;
+    border: 1px solid pink;
+    margin-top: 25px;
+}
+
+#logo-column {
+    float:left;
+}
+
+#page {
+    border-width: 0;
+    margin-left: 190px;
+}
+
+body > br {
+    display:block;
+    clear:both;
+}
+
+body > nav {
+    margin: 0;
+    width: 150px;
+    position: absolute;
+    z-index: 300;
+    top:0;
+    left:0;
+}
+
+body > nav ul {
+    list-style: none;
+    margin: 0; padding: 0;
+    margin: 32px 0;
+
+}
+
+body > nav li {
+    position:relative;
+}
+
+body > nav li .nob,
+body > nav li a {
+    display: block;
+    font-family: Verdana;
+    font-size: 12px;
+    letter-spacing: -1px;
+    text-align: right;
+    text-decoration: none;
+    text-transform: uppercase;
+    height: 16px;
+    line-height: 16px;
+
+    position:relative;
+    z-index: 500;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+body > nav li .nob:focus,
+body > nav li a:focus {
+    outline: none;
+}
+
+body > nav li a {
+    padding: 6px 1.5em 6px 6px;
+}
+
+body > nav li .nob {
+    right: -23px;
+    top: 0px;
+    display:none;
+    position:absolute;
+    z-index: 200;
+    padding: 6px 10px;
+}
+
+
+body > nav li.selected a,
+body > nav li a:hover {
+    padding: 6px 0px 6px 6px;
+}

@@ -1,0 +1,34 @@
+
+#page > section {
+    background-color: #FFF;
+    border-bottom: 1px solid #666;
+    border-right: 1px solid #666;
+
+    border-top: 1px solid #CCC;
+    border-left: 1px solid #CCC;
+}
+
+#page > section > h4 {
+    border-bottom: 1px solid #CCC;
+}
+
+#page > section {
+    width: 450px;
+    float:left;
+    margin: 12px;
+}
+
+#page > section > hr {
+    background-color: #DDD;
+    height: 1px;
+}
+
+#page > section > h4 {
+    margin:0;
+    padding: 0.5em;
+    border-bottom: 1px solid black;
+}
+
+#page > section > p {
+    margin: 1em;
+}

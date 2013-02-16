@@ -1,0 +1,31 @@
+.error {
+    color: red;
+    font-weight: bold;
+}
+.success {
+    color: green;
+}
+
+#overview > ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+#overview > ul > li {
+    clear:both;
+    border-bottom: 1px dotted gray;
+    display:block;
+    height: 1.25em;
+    margin-bottom: 8px;
+    margin-left: 20px;
+}
+#overview > ul > li.error {
+    height: auto;
+}
+#overview li > label {
+    float: left;
+}
+#overview li > div {
+    float: left;
+    width: 25px;
+}

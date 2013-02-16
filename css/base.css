@@ -1,0 +1,25 @@
+
+article, aside, figure, footer, header, hgroup, menu, nav, section {
+  display:block;
+}
+
+hr {
+  margin: 0 auto;
+  border:0;
+}
+
+#oldBrowserMessage {
+    display: none;
+}
+
+h1, h2, h3, h4, h5 {
+    margin-bottom: 0.5em;
+}
+
+h3 {
+    font-size: 28px;
+}
+
+ul {
+    margin: 0.5em 0;
+}

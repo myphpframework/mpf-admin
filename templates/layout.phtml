@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+    <title><?= $this->getText('title') ?></title>
+    <link rel="icon" type="image/ico" href="/images/favicon.ico"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=<?= $this->getText('encoding') ?>"/>
+    <meta http-equiv="Content-Language" content="<?= $this->getText('lang') ?>"/>
+    <meta name="description" content="<?= $this->getText('description') ?>"/>
+    <meta name="keywords" content="<?= $this->getText('keywords') ?>"/>
+    <meta name="author" content="<?= $this->getText('author') ?>"/>
+    <meta name="copyright" content="<?= $this->getText('copyright') ?>"/>
+    <meta name="robots" content="<?= $this->getText('robots') ?>"/>
+    <style type="text/css" media="screen" title="Default Style">
+        @import url("/mpf-admin/css/base.css");
+        @import url("/mpf-admin/css/colors.css");
+        @import url("/mpf-admin/css/layout.css");
+    <?php foreach ($GLOBALS['cssFiles'] as $cssFile): ?>
+        @import url("<?= $cssFile ?>");
+    <?php endforeach; ?>
+    </style>
+
+    <!--[if lt IE 9]><link rel="stylesheet" href="/css/ie.css" /><![endif]-->
+    <!--[if lt IE 9]><script type="text/javascript" src="/js/mpf/ie.js"></script><![endif]-->
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+</head>
+<body>
+<!--[if lt IE 7]><div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." /></a></div> <![endif]-->
+<!--[if lte IE 8]>
+<script type="text/javascript">
+(function(){var html5elmeents = "address|article|aside|audio|canvas|command|datalist|details|dialog|figure|figcaption|footer|header|hgroup|keygen|mark|meter|menu|nav|progress|ruby|section|time|video".split('|');for(var i = 0; i < html5elmeents.length; i++){document.createElement(html5elmeents[i]);}})();
+</script>
+<![endif]-->
+
+<?= MPF\Template::getFile('header', $this);  ?>
+
+<nav>
+    <hr class="gradientBlueNoise" />
+    <ul>
+        <li data-menu="overview"><span class="nob">&#183;</span><a href="/mpf-admin/">Overview</a></li>
+        <li data-menu="settings"><span class="nob">&#183;</span><a href="/mpf-admin/settings/">Settings</a></li>
+        <li data-menu="databases"><span class="nob">&#183;</span><a href="/mpf-admin/databases/">Databases</a></li>
+        <li data-menu="users"><span class="nob">&#183;</span><a href="/mpf-admin/users/">Users</a></li>
+        <li data-menu="bukets"><span class="nob">&#183;</span><a href="/mpf-admin/bukets/">Buckets</a></li>
+    </ul>
+</nav>
+<section id="page">
+    <div id="userErrors">
+        <ul>
+        <?php foreach($GLOBALS['userErrors'] as $error): ?>
+            <li><?= $error ?></li>
+        <?php endforeach; ?>
+        </ul>
+    </div>
+
+    <?= MPF\Template::getFile('content', $this); ?>
+</section>
+
+<script type="text/javascript" src="/mpf-admin/mpf-js/reset.js"></script>
+<script type="text/javascript" src="/mpf-admin/mpf-js/mpf.jquery.js"></script>
+<script type="text/Javascript">mpfRestUrl = '/mpf-admin/rest/';</script>
+<script type="text/javascript" src="/mpf-admin/js/base.js"></script>
+<? foreach ($jsFiles as $jsFile): ?>
+<script type="text/javascript" src="<?= $jsFile; ?>"></script>
+<? endforeach; ?>
+</body>
+</html>
