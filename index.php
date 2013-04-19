@@ -13,37 +13,25 @@ $template->startContent(); ?>
 
     <h3><?= Text::byXml('layout')->get('overview') ?></h3>
 
-    <div>
+    <section>
         <h4>Settings</h4>
         <ul>
             <li>
-                <h5>Log Levels</h5>
-                <label>File</label>
-                <span>???</span>
-                <label>Type</label>
-                <span>???</span>
-                <label>Categories</label>
-                <span>???</span>
-            </li>
-            <li>
-                <h5>Caches</h5>
-                <label>Templates</label>
-                <span>???</span>
-                <label>Templates</label>
-                <span>???</span>
-            </li>
-            <li>
-                <h5>Default Local</h5>
+                <label>Default Local</label>
                 <span>en_CA</span>
             </li>
             <li>
-                <label>Test</label>
-                <span>Status</span>
+                <label>Logs</label>
+                <span>Disabled</span>
+            </li>
+            <li>
+                <label>Cache</label>
+                <span>Disabled</span>
             </li>
         </ul>
-    </div>
+    </section>
 
-    <div>
+    <section>
         <h4>Databases</h4>
         <ul>
             <li>
@@ -63,9 +51,9 @@ $template->startContent(); ?>
                 <span>Status</span>
             </li>
         </ul>
-    </div>
+    </section>
 
-    <div>
+    <section>
         <h4>users</h4>
         <ul>
             <li>
@@ -85,9 +73,9 @@ $template->startContent(); ?>
                 <span>Status</span>
             </li>
         </ul>
-    </div>
+    </section>
 
-    <div>
+    <section>
         <h4>Buckets</h4>
         <ul>
             <li>
@@ -107,7 +95,7 @@ $template->startContent(); ?>
                 <span>Status</span>
             </li>
         </ul>
-    </div>
+    </section>
 
 <? $template->stopContent();
 echo $template;

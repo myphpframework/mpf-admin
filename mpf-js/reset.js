@@ -7,8 +7,21 @@ if (!Object.prototype.hasOwnProperty) {
     };
 }
 
+// Object.keys needs to be after Object.hasOwnProperty
+if (!Object.prototype.keys) {
+    Object.keys = function(o) {
+        var result = [];
+        for(var name in o) {
+            if (o.hasOwnProperty(name)) {
+                result.push(name);
+            }
+        }
+        return result;
+    };
+}
+
 // Make sure the function "indexOf" works
-if (!Array.prototype.indexOf) {
+if (!Array.prototype.indexOf) { 
     Array.prototype.indexOf = function(obj){
         for(var i=0; i<this.length; i++){
             if(this[i]==obj){
@@ -35,12 +48,3 @@ if (!Array.prototype.forEach) {
     };
 }
 
-if (!Object.keys) {
-    Object.keys = function(o) {
-        if (o !== Object(o))
-            throw new TypeError('Object.keys called on a non-object');
-        var k=[],p;
-        for (p in o) if (Object.prototype.hasOwnProperty.call(o,p)) k.push(p);
-        return k;
-    }
-}

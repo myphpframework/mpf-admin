@@ -1,0 +1,8 @@
+
+.newUser {
+    display:none;
+}
+
+form[name="login"] fieldset {
+    width: 350px;
+}

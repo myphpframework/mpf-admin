@@ -1,4 +1,12 @@
-var mpf = {}, mpfTexts = {}, mpfRestUrl = '/rest/';
+var mpf = {}, mpfTexts = {}, mpfRestUrl = '/rest/', mpfOptions = {};
+
+// Retrieve the query string of the src
+$('script[src*="mpf.jquery"]').each(function (index, item) {
+    mpfOptions = $.parseQuerystring(item.src);
+    if (mpfOptions.hasOwnProperty('restUrl')) {
+        mpfRestUrl = mpfOptions.restUrl;
+    }
+});
 
 mpf.ajaxForm = function ajaxForm($form, callback) {
     var data = [];
@@ -8,12 +16,17 @@ mpf.ajaxForm = function ajaxForm($form, callback) {
         data.push($element.attr('name') +'='+ $element.val());
     });
 
+    $('[type="checkbox"]:checked', $form).each(function (index, element) {
+        var $element = $(element);
+        data.push($element.attr('name') +'[]='+ $element.val());
+    });
+
     $('[type="text"],[type="password"],textarea,select').each(function (index, element) {
         var $element = $(element);
         data.push($element.attr('name') +'='+ $element.val());
     });
 
-    mpf.ajax($form.attr('action'), data.join('&'), $form.attr('method'), callback);
+    return mpf.ajax($form.attr('action').replace('.html', ''), data.join('&'), $form.attr('method'), callback);
 };
 
 mpf.ajax = function ajax(url, querystring, method, callback) {
@@ -21,13 +34,15 @@ mpf.ajax = function ajax(url, querystring, method, callback) {
         callback = args.pop(),
         url = args.shift(),
         querystring = (args.length == 0 ? '' : args.shift()),
-        method = (args.length == 0 ? 'POST' : args.shift());
+        method = (args.length == 0 ? 'POST' : args.shift()),
+        $ajaxHandler = null;
 
     querystring = (!querystring ? 'PWD='+encodeURIComponent(document.location.href) : querystring+'&PWD='+encodeURIComponent(document.location.href));
 
-    $.ajax({
+    $ajaxHandler = $.ajax({
         type: method,
         url: url,
+        dataType: 'jsonp',
         data: querystring,
         error: function (error) {
             if (error.readyState != 0) {
@@ -42,7 +57,7 @@ mpf.ajax = function ajax(url, querystring, method, callback) {
                 callback('Unexpected error', response);
             }
 
-            if (response.hasOwnProperty('success') && response.success) {
+            if (!response.hasOwnProperty('error')) {
                 callback(null, response);
             } else if (response.hasOwnProperty('error')) {
                 callback(response.error, response);
@@ -51,6 +66,8 @@ mpf.ajax = function ajax(url, querystring, method, callback) {
             }
         }
     });
+
+    return $ajaxHandler;
 };
 
 mpf.ajaxGet = function get(url, callback) {

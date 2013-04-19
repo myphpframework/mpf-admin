@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE i18n SYSTEM "http://myphpframework.com/dtd/i18n.dtd" >
+<i18n>
+    <country code="CA">
+        <text id="title">Login &amp; Registration</text>
+        <text id="email">Email</text>
+        <text id="password">Password</text>
+        <text id="newUser">I am a new user</text>
+        <text id="passwordConfirm">Confirm password</text>
+        <text id="submit">Submit</text>
+        <text id="firstUser">You are the first user to access the mpf-admin and thus will be granted administrative privileges.</text>
+    </country>
+</i18n>
