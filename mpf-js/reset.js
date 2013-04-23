@@ -1,4 +1,8 @@
 
+if (typeof localStorage == 'undefined' || localStorage == null) {
+    var localStorage = null;
+}
+
 // Make sure the function "hasOwnProperty" works
 if (!Object.prototype.hasOwnProperty) {
     Object.prototype.hasOwnProperty = function(prop) {
@@ -21,7 +25,7 @@ if (!Object.prototype.keys) {
 }
 
 // Make sure the function "indexOf" works
-if (!Array.prototype.indexOf) { 
+if (!Array.prototype.indexOf) {
     Array.prototype.indexOf = function(obj){
         for(var i=0; i<this.length; i++){
             if(this[i]==obj){

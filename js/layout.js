@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    "use strict";
+
     var currentPage = document.location.href.match(/\/([a-zA-Z]+)\/|$/),
         $menu = $('body > nav'),
         $headerSeperator = $('body > header > hr');
@@ -45,11 +47,25 @@ $(document).ready(function () {
 
     setTimeout(function () {
         $('.handle', $menu).click();
-    }, 100);
+    }, 250);
 
-    $('input,select,textarea,checkbox,radio').on('error', function (event, errorMsg) {
+    // ########### Ajax Validation forms
+    $('input,select,textarea,checkbox,radio').on('addCheck', function (event, check) {
         var $element = $(this), $label = $('label[for="'+$element.attr('name')+'"]');
+        if (check == 'required') {
+            $label.prepend('<span class="required">*</span>');
+        }
+    });
+
+    $('form,input,select,textarea,checkbox,radio').on('error', function (event, errorMsg) {
+        var $element = $(this), $label = $('label[for="'+$element.attr('name')+'"]'), $form = $element.closest('form');
         $('[data-error-img="'+$element.attr('name')+'"]').remove();
         $label.after('<img src="/mpf-admin/images/icons/16x16/error.png" width="16" height="16" data-error-img="'+$element.attr('name')+'" alt="error icon" title="'+errorMsg+'" />');
+
+        if ($('ul.error li', $form).length == 1) {
+            $('ul.error li', $form).addClass('singleError');
+        } else {
+            $('ul.error li', $form).removeClass('singleError');
+        }
     });
 });

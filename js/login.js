@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    "use strict";
     var $loginForm = $('form[name="login"]');
 
     $('#new').click(function () {
@@ -6,6 +7,9 @@ $(document).ready(function () {
 
         if (this.checked) {
             $('.newUser').slideDown();
+            $('#passwordConfirm').validate('required passwordConfirm');
+        } else {
+            $('#passwordConfirm').unvalidate();
         }
     });
 
@@ -15,12 +19,11 @@ $(document).ready(function () {
 
     $('#email').validate('required email');
     $('#password').validate('required password');
-    $('#passwordConfirm').validate('required passwordConfirm');
     $loginForm.submit(function () {
         $('[data-error-img]').remove();
 
         $loginForm.prop('action', '/mpf-admin/rest/user/'+$('#email').val()+'/login');
-        if ($('#new:checked').length > 1) {
+        if ($('#new:checked').length == 1) {
             $loginForm.prop('action', '/mpf-admin/rest/user/');
             $loginForm.prop('method', 'post');
         }
@@ -31,9 +34,14 @@ $(document).ready(function () {
                 return;
             }
 
-            mpf.ajaxForm($loginForm, function (error, response) {
-                console.log(response);
-            })
+            mpf.ajaxForm($loginForm, function (errors, response) {
+                if (errors) {
+                    $loginForm.addFormErrors(errors);
+                    return;
+                }
+
+                document.location.href = "/mpf-admin/";
+            });
         });
 
         return false;

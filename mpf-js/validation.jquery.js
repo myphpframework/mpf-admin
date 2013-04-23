@@ -1,4 +1,21 @@
-var countries = ["AF","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","AW","AU","AT","AZ","BS","BH","BD","BB","BY","BE","BZ","BJ","BM","BT","BO","BA","BW","BV","BR","IO","BN","BG","BF","BI","KH","CM","CA","CV","KY","CF","TD","CL","CN","CX","CC","CO","KM","CG","CK","CR","CI","HR","CU","CY","CZ","DK","DJ","DM","DO","TP","EC","EG","SV","GQ","ER","EE","ET","FK","FO","FJ","FI","FR","FX","GF","PF","TF","GA","GM","GE","DE","GH","GI","GR","GL","GD","GP","GU","GT","GN","GW","GY","HT","HM","HN","HK","HU","IS","IN","ID","IR","IQ","IE","IL","IT","JM","JP","JO","KZ","KE","KI","KP","KR","KW","KG","LA","LV","LB","LS","LR","LY","LI","LT","LU","MO","MK","MG","MW","MY","MV","ML","MT","MH","MQ","MR","MU","YT","MX","FM","MD","MC","MN","MS","MA","MZ","MM","NA","NR","NP","NL","AN","NC","NZ","NI","NE","NG","NU","NF","MP","NO","OM","PK","PW","PA","PG","PY","PE","PH","PN","PL","PT","PR","QA","RE","RO","RU","RW","KN","LC","VC","WS","SM","ST","SA","SN","SC","SL","SG","SK","SI","SB","SO","ZA","GS","ES","LK","SH","PM","SD","SR","SJ","SZ","SE","CH","SY","TW","TJ","TZ","TH","TG","TK","TO","TT","TN","TR","TM","TC","TV","UG","UA","AE","GB","US","UM","UY","UZ","VU","VA","VE","VN","VG","VI","WF","EH","YE","YU","ZR","ZM","ZW","ME","RS"],
+"use strict";
+
+/*
+document.addEventListener("DOMNodeInserted", function(event) {
+    if (event.target.tagName == 'SCRIPT') {
+        var $script = $(event.target);
+        console.log($script.attr('src'));
+        throw "test";
+    }
+});
+
+$.getScript('http://myphpframework.self/js/test.js', function() {
+    return false;
+});
+*/
+
+var formsValidations = {},
+    countries = ["AF","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","AW","AU","AT","AZ","BS","BH","BD","BB","BY","BE","BZ","BJ","BM","BT","BO","BA","BW","BV","BR","IO","BN","BG","BF","BI","KH","CM","CA","CV","KY","CF","TD","CL","CN","CX","CC","CO","KM","CG","CK","CR","CI","HR","CU","CY","CZ","DK","DJ","DM","DO","TP","EC","EG","SV","GQ","ER","EE","ET","FK","FO","FJ","FI","FR","FX","GF","PF","TF","GA","GM","GE","DE","GH","GI","GR","GL","GD","GP","GU","GT","GN","GW","GY","HT","HM","HN","HK","HU","IS","IN","ID","IR","IQ","IE","IL","IT","JM","JP","JO","KZ","KE","KI","KP","KR","KW","KG","LA","LV","LB","LS","LR","LY","LI","LT","LU","MO","MK","MG","MW","MY","MV","ML","MT","MH","MQ","MR","MU","YT","MX","FM","MD","MC","MN","MS","MA","MZ","MM","NA","NR","NP","NL","AN","NC","NZ","NI","NE","NG","NU","NF","MP","NO","OM","PK","PW","PA","PG","PY","PE","PH","PN","PL","PT","PR","QA","RE","RO","RU","RW","KN","LC","VC","WS","SM","ST","SA","SN","SC","SL","SG","SK","SI","SB","SO","ZA","GS","ES","LK","SH","PM","SD","SR","SJ","SZ","SE","CH","SY","TW","TJ","TZ","TH","TG","TK","TO","TT","TN","TR","TM","TC","TV","UG","UA","AE","GB","US","UM","UY","UZ","VU","VA","VE","VN","VG","VI","WF","EH","YE","YU","ZR","ZM","ZW","ME","RS"],
     states = {
         'CA': ["AB","BC","PE","MB","NB","NS","NV","ON","QC","SK","NL","NT","YK"],
         'US': ["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY","DC"]
@@ -16,16 +33,16 @@ var countries = ["AF","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","AW","AU
             var total = 0;
             cardDigits.reverse().forEach(function (digit, index) {
                 if ((index % 2) != 0) {
-                    var timestwo = (parseInt(digit) * 2);
+                    var timestwo = (parseInt(digit, 10) * 2);
                     if (timestwo > 9) {
                         timestwo.toString().split('').forEach(function (digit) {
-                            total += parseInt(digit);
+                            total += parseInt(digit, 10);
                         });
                     } else {
                         total += timestwo;
                     }
                 } else {
-                    total += parseInt(digit);
+                    total += parseInt(digit, 10);
                 }
             });
 
@@ -171,7 +188,7 @@ var countries = ["AF","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","AW","AU
 
         return ($(element).val() == '' ? false : true);
     }
-}, formsValidations = {};
+};
 
 $.fn.unvalidate = function removeValidate() {
     return this.stop().each(function() {
@@ -248,7 +265,7 @@ $.fn.validate = function validate() {
                         failedChecks: invalidChecks
                     });
                 }
-            };
+            }
 
             if (callback != null) {
                 callback.call(element, isAllValid, invalidFields);
@@ -273,6 +290,10 @@ $.fn.validate = function validate() {
         }
 
         if (checks.length > 0) {
+            for (var i=0; i < checks.length; i++) {
+                $(element).trigger('addCheck', checks[i]);
+            }
+
             $(element).bind(eventString, function (event) {
                 var isValid = true;
                 for (var i=0; i < checks.length; i++) {
@@ -294,14 +315,25 @@ $.fn.addFormErrors = function addFormErrors(invalidFields) {
     var $form = $(this), $errors = $('<ul class="error">');
     $('ul.error', $form).remove();
     $('.error', $form).removeClass('error');
+
+    $('fieldset', $form).prepend($errors);
     invalidFields.forEach(function (field) {
         var $element = $(field.element),
             $label = $('label[for="'+$element.attr('name')+'"]');
+
         // Custom error ?
-        if (field.hasOwnProperty('errorMsg')) {
-            var errorMsg = field.errorMsg.replace('@field@', $label.text());
-            $errors.append('<li>'+ field.errorMsg.replace('@field@', $label.text()) +'</li>');
-            $element.trigger('error', errorMsg);
+        if (field.hasOwnProperty('msg')) {
+            var errorMsg = field.msg;
+            if (field.hasOwnProperty('code')) {
+                errorMsg = field.code +': '+ field.msg;
+            }
+
+            $errors.append('<li>'+ errorMsg +'</li>');
+            if (field.hasOwnProperty('element')) {
+                $element.trigger('error', field.msg.replace(/"/g, '&quot;'));
+            } else {
+                $form.trigger('error', field.msg.replace(/"/g, '&quot;'));
+            }
         } else {
             field.failedChecks.forEach(function (check) {
                 var errorMsg = mpf.text('mpf_validations', check).replace('@field@', $label.text());
@@ -313,7 +345,6 @@ $.fn.addFormErrors = function addFormErrors(invalidFields) {
         $label.addClass('error');
         $element.addClass('error');
     });
-    $('fieldset', $form).prepend($errors);
 }
 
 // load texts for the validations

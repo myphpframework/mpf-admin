@@ -4,6 +4,7 @@ namespace MPF;
 
 use MPF\REST\Service;
 use MPF\Rest\Parser;
+use MPF\ENV;
 
 class REST {
     protected static $basePath = '';
@@ -114,8 +115,12 @@ class REST {
             $service->output($response);
         } catch (\Exception $e) {
             $errorCode = (property_exists($e, 'restCode') ? $e->restCode : Service::HTTPCODE_INTERNAL_ERROR);
+            $msg = 'Internal Server Error';
+            if (ENV::getType() != ENV::TYPE_PRODUCTION) {
+                $msg = $e->getMessage();
+            }
             $response = array('errors' => array(
-                array("code" => $errorCode, "msg" => 'Internal Server Error')
+                array("code" => $errorCode, "msg" => $msg)
             ));
             Logger::Log('\MPF\REST', 'Response: '.print_r($response, true), Logger::LEVEL_WARNING, Logger::CATEGORY_FRAMEWORK | Logger::CATEGORY_SERVICE);
             $service->output($response);

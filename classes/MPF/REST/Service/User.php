@@ -7,6 +7,7 @@ use MPF\ENV;
 use MPF\Text;
 use MPF\Logger;
 use MPF\User as Usr;
+use MPF\User\Group;
 
 class User extends \MPF\REST\Service {
 
@@ -40,6 +41,12 @@ class User extends \MPF\REST\Service {
         try {
             $user = Usr::create(\MPF\Email::byString($data['email']));
             $user->setPassword($data['password']);
+
+            // if its the first user we add it to the Admin group
+            if (Usr::getTotalEntries() == 1) {
+                $user->addGroup(Group::ADMIN());
+            }
+
             $user->save();
 
             $this->setResponseCode(self::HTTPCODE_CREATED);
@@ -94,6 +101,7 @@ class User extends \MPF\REST\Service {
         }
 
         $exception = new Exception\InvalidCredentials();
+        $exception->restCode = self::HTTPCODE_UNAUTHORIZED;
         Logger::Log('Service\User', $exception->getMessage(), Logger::LEVEL_WARNING, Logger::CATEGORY_FRAMEWORK | Logger::CATEGORY_SERVICE);
         throw $exception;
     }

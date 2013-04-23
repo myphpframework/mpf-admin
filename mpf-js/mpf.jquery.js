@@ -26,7 +26,21 @@ mpf.ajaxForm = function ajaxForm($form, callback) {
         data.push($element.attr('name') +'='+ $element.val());
     });
 
-    return mpf.ajax($form.attr('action').replace('.html', ''), data.join('&'), $form.attr('method'), callback);
+
+    $('fieldset', $form).prepend('<div class="spinnerWrapper">&nbsp;</div>');
+    $('.spinnerWrapper', $form).spin();
+    $('[type="submit"]', $form).hide();
+    $('ul.error', $form).remove();
+    return mpf.ajax($form.attr('action').replace('.html', ''), data.join('&'), $form.attr('method'), function (errors, response) {
+        var $spinner = $('.spinnerWrapper', $form);
+        $('[type="submit"]', $form).show();
+        $spinner.spin(false);
+        $spinner.fadeOut(function () {
+            $(this).remove();
+        });
+
+        callback(errors, response);
+    });
 };
 
 mpf.ajax = function ajax(url, querystring, method, callback) {
@@ -49,6 +63,7 @@ mpf.ajax = function ajax(url, querystring, method, callback) {
                 try {
                     error = JSON.parse(error.responseText).error;
                 } catch (e) {}
+                console.log(error);
                 callback(error, null);
             }
         },
@@ -57,10 +72,10 @@ mpf.ajax = function ajax(url, querystring, method, callback) {
                 callback('Unexpected error', response);
             }
 
-            if (!response.hasOwnProperty('error')) {
+            if (!response.hasOwnProperty('errors')) {
                 callback(null, response);
-            } else if (response.hasOwnProperty('error')) {
-                callback(response.error, response);
+            } else if (response.hasOwnProperty('errors')) {
+                callback(response.errors, response);
             } else {
                 callback('Unexpected error', response);
             }
@@ -88,7 +103,7 @@ mpf.text = function text(filename, id) {
     }
 
     var localStorageIndex = mpf.locale() +':'+ filename;
-    if (typeof localStorage != 'undefined' && localStorage.hasOwnProperty(localStorageIndex)) {
+    if (localStorage && localStorage.hasOwnProperty(localStorageIndex)) {
         mpfTexts[ filename ] = JSON.parse(localStorage[ localStorageIndex ]);
         return mpfTexts[ filename ][id];
     }
@@ -100,7 +115,7 @@ mpf.text = function text(filename, id) {
         }
 
         mpfTexts[filename] = response;
-        if (typeof localStorage != 'undefined') {
+        if (localStorage) {
             localStorage[ localStorageIndex ] = JSON.stringify(response);
         }
     });
