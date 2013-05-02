@@ -336,7 +336,7 @@ $.fn.addFormErrors = function addFormErrors(invalidFields) {
             }
         } else {
             field.failedChecks.forEach(function (check) {
-                var errorMsg = mpf.text('mpf_validations', check).replace('@field@', $label.text());
+                var errorMsg = mpf.text('mpf_validations', check, {'@field@': $label.text()});
                 $errors.append('<li>'+ errorMsg +'</li>');
                 $element.trigger('error', errorMsg.replace(/"/g, '&quot;'));
             });
@@ -346,6 +346,3 @@ $.fn.addFormErrors = function addFormErrors(invalidFields) {
         $element.addClass('error');
     });
 }
-
-// load texts for the validations
-mpf.text('mpf_validations');

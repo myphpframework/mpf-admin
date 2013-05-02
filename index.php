@@ -11,8 +11,6 @@ $jsFiles[] = '/mpf-admin/js/overview.js';
 $template = MPF\Template::getFile('layout');
 $template->startContent(); ?>
 
-    <h3><?= Text::byXml('layout')->get('overview') ?></h3>
-
     <section>
         <h4>Settings</h4>
         <ul>
@@ -98,4 +96,4 @@ $template->startContent(); ?>
     </section>
 
 <? $template->stopContent();
-echo $template;
+echo $template->parse();

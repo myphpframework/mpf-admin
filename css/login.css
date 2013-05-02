@@ -3,6 +3,10 @@
     display:none;
 }
 
+.existingUser {
+    text-align: center;
+}
+
 form[name="login"] fieldset {
     width: 350px;
 }

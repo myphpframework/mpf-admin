@@ -6,9 +6,14 @@ $(document).ready(function () {
         $('.newUser').slideUp();
 
         if (this.checked) {
-            $('.newUser').slideDown();
+            $('.existingUser').slideUp(function () {
+                $('.newUser').slideDown();
+            });
             $('#passwordConfirm').validate('required passwordConfirm');
         } else {
+            $('.newUser').slideUp(function () {
+                $('.existingUser').slideDown();
+            });
             $('#passwordConfirm').unvalidate();
         }
     });
@@ -20,11 +25,11 @@ $(document).ready(function () {
     $('#email').validate('required email');
     $('#password').validate('required password');
     $loginForm.submit(function () {
-        $('[data-error-img]').remove();
+        $('[data-form-error-img]').remove();
 
-        $loginForm.prop('action', '/mpf-admin/rest/user/'+$('#email').val()+'/login');
+        $loginForm.prop('action', mpf.restUrl+'user/'+$('#email').val()+'/login');
         if ($('#new:checked').length == 1) {
-            $loginForm.prop('action', '/mpf-admin/rest/user/');
+            $loginForm.prop('action', mpf.restUrl+'user/');
             $loginForm.prop('method', 'post');
         }
 

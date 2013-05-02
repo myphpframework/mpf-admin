@@ -1,13 +1,13 @@
 $(document).ready(function () {
     "use strict";
 
-    var currentPage = document.location.href.match(/\/([a-zA-Z]+)\/|$/),
+    var currentPage = document.location.href.match(/\/([a-zA-Z]+)\/|$/)[1],
         $menu = $('body > nav'),
         $headerSeperator = $('body > header > hr');
 
     $('li', $menu).each(function (index, element) {
         var $menuItem = $(element), name = $menuItem.attr('data-menu');
-        if (name == currentPage) {
+        if (name == currentPage || (!currentPage && name == 'overview')) {
             $('.nob', $menuItem).css('display', 'block');
             $menuItem.addClass('selected');
         }
@@ -51,16 +51,17 @@ $(document).ready(function () {
 
     // ########### Ajax Validation forms
     $('input,select,textarea,checkbox,radio').on('addCheck', function (event, check) {
-        var $element = $(this), $label = $('label[for="'+$element.attr('name')+'"]');
+        var $element = $(this), $form = $element.closest('form'), $label = $('label[for="'+$element.attr('id')+'"]', $form);
         if (check == 'required') {
-            $label.prepend('<span class="required">*</span>');
+            $('[data-form-check-required="'+$element.attr('name')+'"]', $label).remove();
+            $label.prepend('<span class="required" data-form-check-required="'+$element.attr('name')+'">*</span>');
         }
     });
 
     $('form,input,select,textarea,checkbox,radio').on('error', function (event, errorMsg) {
-        var $element = $(this), $label = $('label[for="'+$element.attr('name')+'"]'), $form = $element.closest('form');
-        $('[data-error-img="'+$element.attr('name')+'"]').remove();
-        $label.after('<img src="/mpf-admin/images/icons/16x16/error.png" width="16" height="16" data-error-img="'+$element.attr('name')+'" alt="error icon" title="'+errorMsg+'" />');
+        var $element = $(this), $form = $element.closest('form'), $label = $('label[for="'+$element.attr('name')+'"]', $form);
+        $('[data-form-error-img="'+$element.attr('name')+'"]', $form).remove();
+        $label.after('<img src="/mpf-admin/images/icons/16x16/error.png" width="16" height="16" data-form-error-img="'+$element.attr('name')+'" alt="error icon" title="'+errorMsg+'" />');
 
         if ($('ul.error li', $form).length == 1) {
             $('ul.error li', $form).addClass('singleError');

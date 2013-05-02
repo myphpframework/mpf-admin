@@ -1,6 +1,6 @@
 
 body {
-  background-color: #DBDDE5;
+    background-color: #DBDDE5;
 }
 
 body > header {
@@ -44,21 +44,21 @@ body > nav li a:hover {
 
 
 body > nav > hr {
-  border-bottom: 1px solid #323337;
+    border-bottom: 1px solid #323337;
 }
 
 body > hr {
-  border-bottom: 1px solid #323337;
-  /* box-shadow: 0px 1px 8px -1px #323337; */
-  box-shadow: 4px 0px 7px 0px #323337;
+    border-bottom: 1px solid #323337;
+    /* box-shadow: 0px 1px 8px -1px #323337; */
+    box-shadow: 4px 0px 7px 0px #323337;
 }
 
 body > #page {
 }
 
 form > fieldset {
-  background-color: #FFF;
-  box-shadow: 0 0 7px -2px #323337;
+    background-color: #FFF;
+    box-shadow: 0 0 7px -2px #323337;
 }
 
 form > fieldset legend {
@@ -69,10 +69,67 @@ form > fieldset legend {
     letter-spacing: -1px;
 }
 
+form > fieldset input[type="text"].error, form > fieldset input[type="password"].error, form > fieldset select.error {
+    background: #ff9b9b; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ff9b9b 0%, #ffffff 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff9b9b), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ff9b9b 0%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ff9b9b 0%,#ffffff 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ff9b9b 0%,#ffffff 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ff9b9b 0%,#ffffff 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff9b9b', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
+    border: 1px solid #FF5E5E;
+}
+
+form > fieldset input[type="text"], form > fieldset input[type="password"], form > fieldset select {
+    border: 1px solid #999;
+    background: #c5c8d8; /* Old browsers */
+    background: -moz-linear-gradient(top,  #c5c8d8 0%, #ffffff 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c5c8d8), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #c5c8d8 0%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #c5c8d8 0%,#ffffff 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #c5c8d8 0%,#ffffff 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #c5c8d8 0%,#ffffff 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c5c8d8', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
+    -moz-box-shadow:    inset 0 1px 0 #FFF, 0 0 2px #DDD;
+    -webkit-box-shadow: inset 0 1px 0 #FFF, 0 0 2px #DDD;
+    box-shadow:         inset 0 1px 0 #FFF, 0 0 2px #DDD;
+
+    text-shadow: 1px 1px #FFF;
+}
+
+.loggedUser section span {
+    color: #DDD;
+    text-shadow: 1px 1px black;
+    background: #3B4562;
+
+    border-width: 1px;
+    border-style: solid;
+    border-color: #5a6b9c #5a6b9c #6b7eb8 #6b7eb8;
+    -moz-box-shadow:    0 0 6px 0 #323337 inset;
+    -webkit-box-shadow: 0 0 6px 0 #323337 inset;
+    box-shadow:         0 0 6px 0 #323337 inset;
+}
+
+.loggedUser section a {
+    -moz-box-shadow:    1px 1px 3px 0 #323337;
+    -webkit-box-shadow: 1px 1px 3px 0 #323337;
+    box-shadow:         1px 1px 3px 0 #323337;
+}
+
+.loggedUser section a:hover {
+    -moz-box-shadow:    none;
+    -webkit-box-shadow: none;
+    box-shadow:         none;
+}
+
+
 a.gradientBlueNoise, input.gradientBlueNoise {
-  color: #DDD;
-  border-left: 1px solid #6b7eb8;
-  text-shadow: -1px -1px #2d344c, 1px 1px #8B9ACB;
+    color: #DDD;
+    border-left: 1px solid #6b7eb8;
+    text-shadow: -1px -1px #2d344c, 1px 1px #8B9ACB;
 }
 
 .gradientBlueNoise {

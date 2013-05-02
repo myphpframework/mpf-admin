@@ -1,4 +1,12 @@
 <header>
+    <? if (\MPF\User::bySession()): ?>
+    <div class="loggedUser">
+        <section>
+            <span><?= \MPF\User::bySession()->getEmail()->getUserName() ?></span>
+            <a href="/mpf-admin/rest/user/<?= \MPF\User::bySession()->getEmail() ?>/logout/?redirect=/mpf-admin/login.php" class="gradientBlueNoise"><?= $this->getText('logout', 'layout'); ?></a>
+        </section>
+    </div>
+    <? endif; ?>
     <div>
         <section id="logo-column">
             <h1><a href="/" title="Logo made by Xavier Lebel">MyPhpFramework</a></h1>

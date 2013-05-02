@@ -34,11 +34,11 @@
 <nav>
     <hr class="gradientBlueNoise" />
     <ul>
-        <li data-menu="overview"><span class="nob">&#183;</span><a href="/mpf-admin/">Overview</a></li>
-        <li data-menu="settings"><span class="nob">&#183;</span><a href="/mpf-admin/settings/">Settings</a></li>
-        <li data-menu="databases"><span class="nob">&#183;</span><a href="/mpf-admin/databases/">Databases</a></li>
-        <li data-menu="users"><span class="nob">&#183;</span><a href="/mpf-admin/users/">Users</a></li>
-        <li data-menu="bukets"><span class="nob">&#183;</span><a href="/mpf-admin/bukets/">Buckets</a></li>
+        <li data-menu="overview"><span class="nob">&#183;</span><a href="/mpf-admin/"><?= $this->getText('menuOverview') ?></a></li>
+        <li data-menu="settings"><span class="nob">&#183;</span><a href="/mpf-admin/settings/"><?= $this->getText('menuSettings') ?></a></li>
+        <li data-menu="databases"><span class="nob">&#183;</span><a href="/mpf-admin/databases/"><?= $this->getText('menuDatabases') ?></a></li>
+        <li data-menu="users"><span class="nob">&#183;</span><a href="/mpf-admin/users/"><?= $this->getText('menuUsers') ?></a></li>
+        <li data-menu="bukets"><span class="nob">&#183;</span><a href="/mpf-admin/bukets/"><?= $this->getText('menuBuckets') ?></a></li>
     </ul>
     <div class="handle gradientBlueNoise"><div>&nbsp;</div></div>
 </nav>
@@ -46,7 +46,7 @@
     <div id="userErrors">
         <ul>
         <?php foreach($GLOBALS['userErrors'] as $error): ?>
-            <li><?= $error ?></li>
+            <li><?= $error->getMessage() ?></li>
         <?php endforeach; ?>
         </ul>
     </div>
@@ -56,8 +56,10 @@
 </section>
 
 <script type="text/javascript" src="/mpf-admin/mpf-js/minified/librariries.min.js"></script>
+<script type="text/javascript" src="/mpf-admin/mpf-js/utils.jquery.js"></script>
 <script type="text/javascript" src="/mpf-admin/mpf-js/mpf.jquery.js?restUrl=/mpf-admin/rest/"></script>
 <script type="text/javascript" src="/mpf-admin/mpf-js/validation.jquery.js"></script>
+<script type="text/javascript" src="/mpf-admin/mpf-js/overlay.jquery.js"></script>
 <script type="text/javascript" src="/mpf-admin/js/layout.js"></script>
 <? foreach ($GLOBALS['jsFiles'] as $jsFile): ?>
 <script type="text/javascript" src="<?= $jsFile; ?>"></script>

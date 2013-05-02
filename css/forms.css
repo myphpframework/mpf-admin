@@ -34,43 +34,13 @@ form > fieldset > div label {
 }
 
 form > fieldset input[type="text"], form > fieldset input[type="password"], form > fieldset select {
-    border: 1px solid #999;
-    height: 18px;
-    padding: 2px;
     margin: 0;
+    padding: 2px;
+    width: 175px;
+    height: 18px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
-    width: 175px;
-
-    background: #c5c8d8; /* Old browsers */
-    background: -moz-linear-gradient(top,  #c5c8d8 0%, #ffffff 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c5c8d8), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #c5c8d8 0%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #c5c8d8 0%,#ffffff 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #c5c8d8 0%,#ffffff 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #c5c8d8 0%,#ffffff 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c5c8d8', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
-
-
-    -moz-box-shadow:    inset 0 1px 0 #FFF, 0 0 2px #DDD;
-    -webkit-box-shadow: inset 0 1px 0 #FFF, 0 0 2px #DDD;
-    box-shadow:         inset 0 1px 0 #FFF, 0 0 2px #DDD;
-
-    text-shadow: 1px 1px #FFF;
-}
-
-form > fieldset input[type="text"].error, form > fieldset input[type="password"].error, form > fieldset select.error {
-    background: #ff9b9b; /* Old browsers */
-    background: -moz-linear-gradient(top,  #ff9b9b 0%, #ffffff 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff9b9b), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #ff9b9b 0%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #ff9b9b 0%,#ffffff 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #ff9b9b 0%,#ffffff 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #ff9b9b 0%,#ffffff 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff9b9b', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
-
-    border: 1px solid #FF5E5E;
 }
 
 form > fieldset input[type="radio"], form > fieldset input[type="checkbox"] {
@@ -94,7 +64,7 @@ form span.required {
     color: red;
 }
 
-form [data-error-img] {
+form [data-form-error-img] {
     margin: -4px 4px 0 4px;
     vertical-align: middle;
     position: absolute;

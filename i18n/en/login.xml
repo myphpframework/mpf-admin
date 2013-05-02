@@ -7,6 +7,7 @@
         <text id="password">Password</text>
         <text id="newUser">I am a new user</text>
         <text id="passwordConfirm">Confirm password</text>
+        <text id="passwordLost">[url="#" data-overlay-link="lostPassword"]Recover your password![/url]</text>
         <text id="submit">Submit</text>
         <text id="firstUser">You are the first user to access the mpf-admin and thus will be granted administrative privileges.</text>
     </country>

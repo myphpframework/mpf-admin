@@ -11,6 +11,12 @@
         <text id="copyright">Yes plz.</text>
         <text id="robots">NOINDEX, NOFOLLOW</text>
 
-        <text id="overview">MPF overview</text>
+        <text id="logout">Logout</text>
+
+        <text id="menuOverview">Overview</text>
+        <text id="menuSettings">Settings</text>
+        <text id="menuDatabases">Databases</text>
+        <text id="menuUsers">Users</text>
+        <text id="menuBuckets">Buckets</text>
     </country>
 </i18n>
