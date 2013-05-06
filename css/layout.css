@@ -1,4 +1,3 @@
-
 body {
     margin:0;
     padding:0;
@@ -242,4 +241,47 @@ p.information {
     left: -2px;
     top: -2px;
     z-index: 500;
+}
+
+[data-overlay] {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(9, 11, 61, 0.7) !important;
+
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+
+    display: none;
+    z-index: 5000;
+    text-align: center;
+}
+
+[data-overlay] > section {
+    position: relative;
+    z-index: 4900;
+
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+
+    min-height: 100px;
+    min-width: 300px;
+
+    background-color: white;
+}
+
+[data-overlay="loader"] > section {
+    background-color: transparent !important;
+    width: 300px;
+}
+
+[data-overlay="loader"] > section > .spinner {
+    margin: auto;
+    top: 50px;
 }

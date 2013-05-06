@@ -32,6 +32,6 @@ $template->startContent();
             <input type="submit" value="<?= Text::byXml('login')->get('submit') ?>" class="gradientGreen" />
         </fieldset>
     </form>
-
+<section id="proofOfWork"></section>
 <? $template->stopContent();
 echo $template;

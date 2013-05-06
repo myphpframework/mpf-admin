@@ -15,7 +15,6 @@ class User extends \MPF\REST\Service {
         $this->setResponseCode(self::HTTPCODE_OK);
 
         $options = '';
-
         header('Allow: '.$options);
     }
 

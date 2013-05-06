@@ -55,6 +55,8 @@
     <?= MPF\Template::getFile('content', $this); ?>
 </section>
 
+<section data-overlay="loader" data-overlay-init="false"><section>&nbsp;</section></section>
+
 <script type="text/javascript" src="/mpf-admin/mpf-js/minified/librariries.min.js"></script>
 <script type="text/javascript" src="/mpf-admin/mpf-js/utils.jquery.js"></script>
 <script type="text/javascript" src="/mpf-admin/mpf-js/mpf.jquery.js?restUrl=/mpf-admin/rest/"></script>
@@ -64,5 +66,4 @@
 <? foreach ($GLOBALS['jsFiles'] as $jsFile): ?>
 <script type="text/javascript" src="<?= $jsFile; ?>"></script>
 <? endforeach; ?>
-</body>
 </html>

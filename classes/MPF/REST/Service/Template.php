@@ -2,7 +2,7 @@
 
 namespace MPF\REST\Service;
 
-class Text extends \MPF\REST\Service {
+class Template extends \MPF\REST\Service {
     protected function options($id, $action) {
         $this->setResponseCode(self::HTTPCODE_OK);
 
@@ -24,6 +24,6 @@ class Text extends \MPF\REST\Service {
 
     protected function retrieve($id, $data) {
         $this->setResponseCode(self::HTTPCODE_OK);
-        return \MPF\Text::byXml(str_replace('::', '/', $id))->toArray();
+        return \MPF\Template::getFile(str_replace('::', '/', $id))->parse();
     }
 }
