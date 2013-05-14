@@ -26,27 +26,27 @@ $(document).ready(function () {
     });
 
     $('a', $menu).click(function () {
-        $('.handle', $menu).trigger('click', {url: this.href});
+        $('.handle img', $menu).trigger('click', {url: this.href});
         return false;
     });
 
-    $('.handle', $menu).click(function (event, options) {
+    $('.handle img', $menu).click(function (event, options) {
         if ($('ul:visible', $menu).length > 0) {
             $('ul', $menu).slideUp(function () {
-                $('div.handle > div', $menu).css('background', 'url("/mpf-admin/images/menuHandles.png") 0 -15px');
+                $('div.handle > img', $menu).prop('src', '/mpf-admin/images/icons/32x32/grayArrowDown.png');
                 if (options && options.hasOwnProperty('url')) {
                     document.location.href=options.url;
                 }
             });
         } else {
             $('ul', $menu).slideDown(function () {
-                $('div.handle > div', $menu).css('background', 'url("/mpf-admin/images/menuHandles.png") 0 0');
+                $('div.handle > img', $menu).prop('src', '/mpf-admin/images/icons/32x32/grayArrowUp.png');
             });
         }
     });
 
     setTimeout(function () {
-        $('.handle', $menu).click();
+        $('.handle img', $menu).click();
     }, 250);
 
     // ########### Ajax Validation forms

@@ -1,6 +1,6 @@
 {
     "lostPassword": {
-        "version": "0.1.0",
+        "version": "0.1.1",
         "prefix": "overlays",
         "resources": ["text","html","css","js"]
     }
