@@ -114,6 +114,55 @@ var formsValidations = {},
         }
         return true;
     },
+    passwordStrength: function (element) {
+        var $element = $(element), value = $element.val(), strength = 0, uppercaseLetters = 0, numbers = 0, specialChars = 0, words = 0;
+        if (value.length >= 8) {
+            strength = 30;
+        }
+
+        if (value.match(/[A-Z]{1,}/)) {
+            strength += 15;
+            uppercaseLetters = value.replace(/[^A-Z]/, '').length;
+        }
+
+        if (value.match(/[0-9]{1,}/)) {
+            strength += 15;
+            numbers = value.replace(/[^0-9]/, '').length;
+        }
+
+        if (value.match(/[!|@|#|$|%|^|&|*|?|_|~]{1,}/)) {
+            strength += 20;
+            specialChars = value.replace(/[^0-9]/, '').length;
+        }
+
+        if (value.match(/ /)) {
+            words = value.split(/ /).length;
+        }
+
+        if (specialChars > 1 && numbers > 1 && uppercaseLetters > 1) {
+            strength += 20;
+        }
+
+        if (words > 2) {
+            strength += 30;
+        }
+
+        // remove all the classes that starts with mpfStrength
+        $('[data-mpf-password-strength="'+element.name+'"]').removeClass(function (index, css) {
+            return (css.match(/\bmpfStrength\S+/g) || []).join(' ');
+        });
+
+        if (strength < 50) {
+            $('[data-mpf-password-strength="'+element.name+'"]').addClass('mpfStrengthLow');
+        } else if (strength >= 50 && strength <= 80) {
+            $('[data-mpf-password-strength="'+element.name+'"]').addClass('mpfStrengthMedium');
+        } else if (strength > 80) {
+            $('[data-mpf-password-strength="'+element.name+'"]').addClass('mpfStrengthHigh');
+        }
+
+        strength = ($element.width() * (strength/100));
+        $('[data-mpf-password-strength="'+element.name+'"]').css('width', strength +'px');
+    },
     passwordConfirm: function (element) {
         // find the password field
         var formName = $(element).closest('form').attr('name'), passwordField = null;
@@ -139,9 +188,17 @@ var formsValidations = {},
         }
         return true;
     },
-    name: function (element) {
-        var value = $(element).val().replace(/[^a-zA-Z0-9áãåàâäçéëèêíïìîñóõòôöùûúüýÿßæðøÁÃÅÀÂÄÇÉËÈÊÍÏÌÎÓÕÒÔÖÙÛÚÜÝ?., \-\']/, '')
+    username: function (element) {
+        var value = $(element).val().replace(/[^a-zA-Z0-9 \-\'_]/, '');
         if (element.value != value) {
+            element.value = value;
+            return false;
+        }
+        return true;
+    },
+    name: function (element) {
+        var value = $(element).val().replace(/[^a-zA-Z0-9áãåàâäçéëèêíïìîñóõòôöùûúüýÿßæðøÁÃÅÀÂÄÇÉËÈÊÍÏÌÎÓÕÒÔÖÙÛÚÜÝ?., \-\']/, '');
+        if (element.value != value || value.length > 25) {
             element.value = value;
             return false;
         }
@@ -201,6 +258,7 @@ $.fn.unvalidate = function removeValidate() {
         // find the element and remove it from the checks
         for (var i=0; i < formsValidations[formName].length; i++) {
             if (formsValidations[formName][i].element == this) {
+                $('[data-mpf-password-strength="'+formsValidations[formName][i].element.name+'"]').remove();
                 formsValidations[formName].splice(i, 1);
                 return;
             }
@@ -287,6 +345,10 @@ $.fn.validate = function validate() {
                 checks: checks,
                 element: element
             });
+        }
+
+        if (checks.indexOf('passwordStrength') !== -1) {
+            $('<div data-mpf-password-strength="'+element.name+'">&nbsp;</div>').insertAfter(element);
         }
 
         if (checks.length > 0) {

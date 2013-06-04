@@ -70,14 +70,13 @@ form > fieldset {
 }
 
 form > fieldset legend {
-    background-color: #6B7EB8;
-    border: 1px solid #323337;
-    color: white;
-    text-shadow: 1px 1px #323337;
+    color: black;
+    text-shadow: 1px 1px #EEE;
     letter-spacing: -1px;
+    font-weight: bold;
 }
 
-form > fieldset input[type="text"].error, form > fieldset input[type="password"].error, form > fieldset select.error {
+form > fieldset input[type="text"].error, form > fieldset textarea.error, form > fieldset input[type="password"].error, form > fieldset select.error {
     background: #ff9b9b; /* Old browsers */
     background: -moz-linear-gradient(top,  #ff9b9b 0%, #ffffff 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff9b9b), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
@@ -90,7 +89,7 @@ form > fieldset input[type="text"].error, form > fieldset input[type="password"]
     border: 1px solid #FF5E5E;
 }
 
-form > fieldset input[type="text"], form > fieldset input[type="password"], form > fieldset select {
+form > fieldset input[type="text"], form > fieldset input[type="password"], form > fieldset textarea, form > fieldset select {
     border: 1px solid #999;
     background: #c5c8d8; /* Old browsers */
     background: -moz-linear-gradient(top,  #c5c8d8 0%, #ffffff 100%); /* FF3.6+ */
@@ -133,23 +132,23 @@ form > fieldset input[type="text"], form > fieldset input[type="password"], form
     box-shadow:         none;
 }
 
-[data-overlay] {
+[data-mpf-overlay] {
     background: rgba(9, 11, 61, 0.6) url(/mpf-admin/images/noise2.png);
 }
-[data-overlay] > section {
+[data-mpf-overlay] > section {
     background-color: white;
     -moz-box-shadow:    0px 0px 4px 2px #323337;
     -webkit-box-shadow: 0px 0px 4px 2px #323337;
     box-shadow:         0px 0px 4px 2px #323337;
 }
 
-[data-overlay="loader"] > section {
+[data-mpf-overlay="loader"] > section {
     -moz-box-shadow:    none;
     -webkit-box-shadow: none;
     box-shadow:         none;
 }
 
-[data-overlay] > section > header {
+[data-mpf-overlay] > section > header {
     background: url(/mpf-admin/images/noise.png), #6b7eb8; /* Old browsers */
     background: url(/mpf-admin/images/noise.png), -moz-linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* FF3.6+ */
     background: url(/mpf-admin/images/noise.png), -webkit-gradient(linear, left top, left bottom, color-stop(0%, #6b7eb8), color-stop(100%, #4e5b85)); /* Chrome,Safari4+ */
@@ -162,11 +161,11 @@ form > fieldset input[type="text"], form > fieldset input[type="password"], form
     border-top: 1px solid #a1b4d8;
     color: white;
 }
-[data-overlay] > section > footer {
+[data-mpf-overlay] > section > footer {
     background-color: #EEE;
 }
 
-[data-overlay] > section > div {
+[data-mpf-overlay] > section > div {
     border-top: 1px solid #BBB;
 }
 

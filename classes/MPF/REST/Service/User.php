@@ -35,10 +35,10 @@ class User extends \MPF\REST\Service {
     }
 
     protected function create($id, $data) {
-        $this->validate(array('POST'), array('email', 'password'));
+        $this->validate(array('POST'), array('username', 'password'));
 
         try {
-            $user = Usr::create(\MPF\Email::byString($data['email']));
+            $user = Usr::create($data['username']);
             $user->setPassword($data['password']);
 
             // if its the first user we add it to the Admin group
@@ -53,7 +53,7 @@ class User extends \MPF\REST\Service {
         } catch (\MPF\Db\Exception\DuplicateEntry $e) {
             $this->setResponseCode(self::HTTPCODE_CONFLICT);
             return array('errors' => array(
-                array('code' => self::HTTPCODE_CONFLICT, 'msg' => Text::byXml('mpf_exception')->get('serviceUserAlreadyExists', array('Replace' => array('email' => $data['email']))))
+                array('code' => self::HTTPCODE_CONFLICT, 'msg' => Text::byXml('mpf_exception')->get('serviceUserAlreadyExists', array('Replace' => array('username' => $data['username']))))
             ));
         }
 
@@ -87,14 +87,14 @@ class User extends \MPF\REST\Service {
      * @param array $data
      */
     protected function login($id, $data) {
-        $this->validate(array('PUT'), array('email', 'password'));
-        $id = filter_var($id, FILTER_SANITIZE_EMAIL);
+        $this->validate(array('PUT'), array('username', 'password'));
+        $id = filter_var($id, FILTER_SANITIZE_STRING);
 
         $this->setResponseCode(self::HTTPCODE_OK);
 
-        $user = Usr::byEmail(\MPF\Email::byString($id));
+        $user = Usr::byUsername($id);
         if ($user && $user->verifyPassword($data['password'])) {
-            Logger::Log('Service\User', Text::byXml('mpf_exception')->get('serviceUserSuccessfulLogin', array('Replace' => array('email' => $id, 'id' => $user->getId()))), Logger::LEVEL_WARNING, Logger::CATEGORY_FRAMEWORK | Logger::CATEGORY_SERVICE);
+            Logger::Log('Service\User', Text::byXml('mpf_exception')->get('serviceUserSuccessfulLogin', array('Replace' => array('username' => $id, 'id' => $user->getId()))), Logger::LEVEL_WARNING, Logger::CATEGORY_FRAMEWORK | Logger::CATEGORY_SERVICE);
             $_SESSION['userId'] = $user->getId();
             return;
         }

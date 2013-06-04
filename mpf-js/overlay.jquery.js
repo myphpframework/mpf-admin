@@ -133,7 +133,7 @@ $(document).ready(function () {
             $header = $container.find('> header'),
             $footer = $container.find('> footer');
 
-        parsedOverlayIds.push($overlay.attr('data-overlay'));
+        parsedOverlayIds.push($overlay.attr('data-mpf-overlay'));
 
         function centerOverlay() {
             var totalWidth = parseInt($overlay.width(), 10),
@@ -150,7 +150,7 @@ $(document).ready(function () {
             return false;
         });
 
-        $overlay.not('[data-overlay="loader"]').bind('click', function (event) {
+        $overlay.not('[data-mpf-overlay="loader"]').bind('click', function (event) {
             $overlay.trigger('close');
         });
 
@@ -202,26 +202,26 @@ $(document).ready(function () {
     }
 
     mpfOverlaysInterval = setInterval(function () {
-        $('[data-overlay]').each(function (index, element) {
-            if (parsedOverlayIds.indexOf($(element).attr('data-overlay')) === -1) {
+        $('[data-mpf-overlay]').each(function (index, element) {
+            if (parsedOverlayIds.indexOf($(element).attr('data-mpf-overlay')) === -1) {
                 setOverlayGenericEvents($(element));
             }
         });
 
-        $('[data-overlay-link]').each(function (index, element) {
+        $('[data-mpf-overlay-link]').each(function (index, element) {
             var $link = $(element),
                 options = {},
-                overlayId = $link.attr('data-overlay-link');
+                overlayId = $link.attr('data-mpf-overlay-link');
 
             // We remove the overlay link attribute first not to be picked up by the next interval
-            $link.attr('data-overlay-link', null);
+            $link.attr('data-mpf-overlay-link', null);
 
-            if ($link.attr('data-overlay-options')) {
-                options = $.parseQuerystring($link.attr('data-overlay-options'));
+            if ($link.attr('data-mpf-overlay-options')) {
+                options = $.parseQuerystring($link.attr('data-mpf-overlay-options'));
             }
 
             $link.bind('click', function () {
-                var id = overlayId, $overlay = $('[data-overlay="'+ id +'"]'), $loader = $('[data-overlay="loader"]');
+                var id = overlayId, $overlay = $('[data-mpf-overlay="'+ id +'"]'), $loader = $('[data-mpf-overlay="loader"]');
 
                 if ($overlay.length >= 1) {
                     $overlay.trigger('open', options);
@@ -232,7 +232,7 @@ $(document).ready(function () {
                 mpf.loadResources(id, function () {
                     $('section', $loader).spin(false).parent().trigger('close');
 
-                    setOverlayGenericEvents($('[data-overlay="'+ id +'"]')).trigger('open', options);
+                    setOverlayGenericEvents($('[data-mpf-overlay="'+ id +'"]')).trigger('open', options);
                 });
 
                 return false;

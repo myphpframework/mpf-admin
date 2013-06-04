@@ -29,7 +29,7 @@ class REST {
     }
 
     protected static function authenticate($login, $password) {
-        $user = \MPF\User::byEmail(\MPF\Email::byString($login));
+        $user = \MPF\User::byUsername($login);
         if (!$user) {
             return false;
         }

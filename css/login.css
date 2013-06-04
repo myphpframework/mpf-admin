@@ -10,3 +10,31 @@
 form[name="login"] fieldset {
     width: 350px;
 }
+
+[data-mpf-tooltip="passwordStrength"] {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+[data-mpf-tooltip="passwordStrength"] > section {
+    width: 280px;
+}
+
+[data-mpf-tooltip="passwordStrength"] > section ul {
+}
+
+[data-mpf-tooltip="passwordStrength"] > section ul {
+    list-style: none;
+    padding-left: 1em;
+}
+
+[data-mpf-tooltip="passwordStrength"] > section li {
+    margin-left: 0;
+}
+
+[data-mpf-tooltip="passwordStrength"] > section li:before {
+    content: '✓';
+    margin-right: 0.5em;
+    color: lightgreen;
+    font-size: 1.25em;
+}

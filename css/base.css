@@ -3,11 +3,6 @@ article, aside, figure, footer, header, hgroup, menu, nav, section {
   display:block;
 }
 
-hr {
-  margin: 0 auto;
-  border:0;
-}
-
 #oldBrowserMessage {
     display: none;
 }
@@ -18,4 +13,12 @@ h1, h2, h3, h4, h5 {
 
 ul {
     margin: 0.5em 0;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    margin: 0.25em 0;
+}
+
+p {
+    margin: 0 0 0.5em 0;
 }

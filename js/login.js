@@ -10,11 +10,14 @@ $(document).ready(function () {
                 $('.newUser').slideDown();
             });
             $('#passwordConfirm').validate('required passwordConfirm');
+            $('#password').validate('required passwordStrength password', 'keyup');
         } else {
             $('.newUser').slideUp(function () {
                 $('.existingUser').slideDown();
             });
             $('#passwordConfirm').unvalidate();
+            $('#password').unvalidate();
+            $('#password').validate('required password');
         }
     });
 
@@ -22,12 +25,11 @@ $(document).ready(function () {
        $('.newUser').slideDown();
     });
 
-    $('#email').validate('required email');
-    $('#password').validate('required password');
+    $('#username').validate('required username');
     $loginForm.submit(function () {
         $('[data-form-error-img]').remove();
 
-        $loginForm.prop('action', mpf.restUrl+'user/'+$('#email').val()+'/login');
+        $loginForm.prop('action', mpf.restUrl+'user/'+$('#username').val()+'/login');
         if ($('#new:checked').length == 1) {
             $loginForm.prop('action', mpf.restUrl+'user/');
             $loginForm.prop('method', 'post');

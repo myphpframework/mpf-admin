@@ -413,4 +413,22 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
             mpf.trigger('pfw_hashing:'+id, [hash.toString()]);
         }, 1);
     };
+
+    $('[data-mpf-tooltip]').each(function () {
+        var $element = $(this), $label = $element.find('> label'), $section = $element.find('> section'), $arrow = null;
+
+        $element.append('<span class="triangle">&nbsp;</span>');
+        $arrow = $element.find('> span')
+
+        $label.mouseenter(function () {
+            $section.css('margin-top', '-'+($section.outerHeight()/2)+'px');
+            $section.stop(true, true).fadeIn();
+            $arrow.stop(true, true).fadeIn();
+        });
+
+        $label.mouseleave(function () {
+            $section.stop(true, true).fadeOut();
+            $arrow.stop(true, true).fadeOut();
+        });
+    });
 })();

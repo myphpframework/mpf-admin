@@ -33,6 +33,7 @@
 <?= MPF\Template::getFile('header', $this);  ?>
 <nav>
     <hr class="gradientBlueNoise" />
+<? if (\MPF\User::bySession()): ?>
     <ul>
         <li data-menu="overview"><span class="nob">&#183;</span><a href="/mpf-admin/"><?= $this->getText('menuOverview') ?></a></li>
         <li data-menu="settings"><span class="nob">&#183;</span><a href="/mpf-admin/settings/"><?= $this->getText('menuSettings') ?></a></li>
@@ -41,6 +42,7 @@
         <li data-menu="bukets"><span class="nob">&#183;</span><a href="/mpf-admin/bukets/"><?= $this->getText('menuBuckets') ?></a></li>
     </ul>
     <div class="handle gradientBlueNoise"><img src="/mpf-admin/images/icons/32x32/grayArrowUp.png" width="32" height="32" alt="menu handle" /></div>
+<? endif; ?>
 </nav>
 <section id="page">
     <div id="userErrors">
@@ -55,7 +57,7 @@
     <?= MPF\Template::getFile('content', $this); ?>
 </section>
 
-<section data-overlay="loader"><section>&nbsp;</section></section>
+<section data-mpf-overlay="loader"><section>&nbsp;</section></section>
 
 <script type="text/javascript" src="/mpf-admin/mpf-js/minified/librariries.min.js"></script>
 <script type="text/javascript" src="/mpf-admin/mpf-js/utils.jquery.js"></script>
@@ -66,4 +68,5 @@
 <? foreach ($GLOBALS['jsFiles'] as $jsFile): ?>
 <script type="text/javascript" src="<?= $jsFile; ?>"></script>
 <? endforeach; ?>
+</body>
 </html>
