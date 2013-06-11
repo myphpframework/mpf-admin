@@ -190,8 +190,8 @@ class REST {
         $serviceClass = '\MPF\REST\Service\\' . ucfirst(@$options[0]);
         unset($options[0]);
 
-        $id = filter_var(@$options[1], FILTER_SANITIZE_STRING);
-        $action = filter_var(@$options[2], FILTER_SANITIZE_STRING);
+        $id = filter_var(urldecode(@$options[1]), FILTER_SANITIZE_STRING);
+        $action = filter_var(urldecode(@$options[2]), FILTER_SANITIZE_STRING);
 
         preg_match('/\.json|\.html|\.xml$/i', $id, $matches);
         if (empty($matches)) {

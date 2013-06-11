@@ -1,34 +1,33 @@
 "use strict";
 
 var mpfOverlaysInterval = null;
-
-$(document).ready(function () {
+$(document).ready(function mpf_overlay_closure() {
     var parsedOverlayIds = [], windowMode = false;
 
-    function setOverlayResizableEvents($overlay) {
+    function setResizableEvents($overlay) {
         var $container = $overlay.find('> section'),
             $resizer = $container.find('> footer .resizer');
 
         $resizer.css('cursor', 'se-resize');
-        $resizer.mousedown(function(event) {
+        $resizer.bind('mousedown', function bind_mousedown(event) {
             var dragTime = null,
                 currentOffsetX = 0, startPositionX = 0, maxOffsetX = $(window).width() - $container.outerWidth(), minOffsetX = 0,
                 currentOffsetY = 0, startPositionY = 0, maxOffsetY = $(window).height() - $container.outerHeight(), minOffsetY = 0;
 
-            if (event.which != 1) {
+            if (event.which !== 1) {
                 return;
             }
             event.preventDefault();
 
             dragTime = new Date().getTime();
-            currentOffsetX = ($container.css('width') == 'auto' ? 0 : parseInt($container.css('width')));
+            currentOffsetX = ($container.css('width') === 'auto' ? 0 : parseInt($container.css('width'), 10));
             startPositionX = event.pageX;
 
-            currentOffsetY = ($container.css('height') == 'auto' ? 0 : parseInt($container.css('height')));
+            currentOffsetY = ($container.css('height') === 'auto' ? 0 : parseInt($container.css('height'), 10));
             startPositionY = event.pageY;
 
             $overlay.trigger('startResize');
-            $(window).mousemove(function(event) {
+            $(window).bind('mousemove', function bind_mousemove(event) {
                 var offsetX = currentOffsetX + (event.pageX - startPositionX),
                     offsetY = currentOffsetY + (event.pageY - startPositionY);
                 //if (maxOffsetX >= offsetX && minOffsetX <= offsetX) {
@@ -51,11 +50,11 @@ $(document).ready(function () {
                 return false;
             });
 
-            $(window).mouseup(function(event) {
+            $(window).bind('mouseup', function bind_mouseup(event) {
                 $(window).unbind('mousemove');
                 $(window).unbind('mouseup');
                 event.preventDefault();
-                if (event.which != 1) {
+                if (event.which !== 1) {
                     return false;
                 }
 
@@ -66,30 +65,30 @@ $(document).ready(function () {
         });
     }
 
-    function setOverlayDraggableEvents($overlay) {
+    function setDraggableEvents($overlay) {
         var $container = $overlay.find('> section'),
             $header = $container.find('> header');
 
         $header.css('cursor', 'move');
-        $header.mousedown(function(event) {
+        $header.bind('mousedown', function bind_mousedown(event) {
             var dragTime = null,
                 currentOffsetX = 0, startPositionX = 0, maxOffsetX = $(window).width() - $container.outerWidth(), minOffsetX = 0,
                 currentOffsetY = 0, startPositionY = 0, maxOffsetY = $(window).height() - $container.outerHeight(), minOffsetY = 0;
 
-            if (event.which != 1) {
+            if (event.which !== 1) {
                 return;
             }
             event.preventDefault();
 
             dragTime = new Date().getTime();
-            currentOffsetX = ($container.css('margin-left') == 'auto' ? 0 : parseInt($container.css('margin-left')));
+            currentOffsetX = ($container.css('margin-left') === 'auto' ? 0 : parseInt($container.css('margin-left'), 10));
             startPositionX = event.pageX;
 
-            currentOffsetY = ($container.css('margin-top') == 'auto' ? 0 : parseInt($container.css('margin-top')));
+            currentOffsetY = ($container.css('margin-top') === 'auto' ? 0 : parseInt($container.css('margin-top'), 10));
             startPositionY = event.pageY;
 
             $overlay.trigger('startDrag');
-            $(window).mousemove(function(event) {
+            $(window).bind('mousemove', function bind_mousemove(event) {
                 var offsetX = currentOffsetX + (event.pageX - startPositionX),
                     offsetY = currentOffsetY + (event.pageY - startPositionY);
                 if (maxOffsetX >= offsetX && minOffsetX <= offsetX) {
@@ -112,11 +111,11 @@ $(document).ready(function () {
                 return false;
             });
 
-            $(window).mouseup(function(event) {
+            $(window).bind('mouseup', function bind_mouseup(event) {
                 $(window).unbind('mousemove');
                 $(window).unbind('mouseup');
                 event.preventDefault();
-                if (event.which != 1) {
+                if (event.which !== 1) {
                     return false;
                 }
 
@@ -128,14 +127,14 @@ $(document).ready(function () {
         });
     }
 
-    function setOverlayGenericEvents($overlay) {
+    function setGenericEvents($overlay) {
         var $container = $overlay.find('> section'),
             $header = $container.find('> header'),
             $footer = $container.find('> footer');
 
         parsedOverlayIds.push($overlay.attr('data-mpf-overlay'));
 
-        function centerOverlay() {
+        function centerContainer() {
             var totalWidth = parseInt($overlay.width(), 10),
             totalHeight = parseInt($overlay.height(), 10),
             bodyWidth = parseInt($container.width(), 10),
@@ -145,20 +144,20 @@ $(document).ready(function () {
             $container.css('margin-top', (totalHeight / 2) - (bodyHeight / 2) +'px');
         }
 
-        $container.bind('click', function(event) {
+        $container.bind('click', function bind_click_container(event) {
             event.stopPropagation();
             return false;
         });
 
-        $overlay.not('[data-mpf-overlay="loader"]').bind('click', function (event) {
+        $overlay.not('[data-mpf-overlay="loader"]').bind('click', function bind_click(event) {
             $overlay.trigger('close');
         });
 
-        $overlay.bind('center', function(event) {
-            centerOverlay();
+        $overlay.bind('center', function bind_center(event) {
+            centerContainer();
         });
 
-        $overlay.bind('open', function(event, options) {
+        $overlay.bind('open', function bind_open(event, options) {
             options = options || {};
 
             if (options.hasOwnProperty('windowMode')) {
@@ -167,11 +166,11 @@ $(document).ready(function () {
             }
 
             if (options.hasOwnProperty('draggable') && $header.length > 0) {
-                setOverlayDraggableEvents($overlay);
+                setDraggableEvents($overlay);
             }
 
             if (options.hasOwnProperty('resizable') && $footer.length > 0 && $footer.find('.resizer')) {
-                setOverlayResizableEvents($overlay);
+                setResizableEvents($overlay);
             }
 
             if (windowMode) {
@@ -180,9 +179,10 @@ $(document).ready(function () {
             }
 
             $container.hide();
-            $overlay.fadeIn();
-            $overlay.trigger('center');
-            $container.fadeIn();
+            $overlay.fadeIn(function () {
+                $overlay.trigger('center');
+                $container.fadeIn();
+            });
 
             if (windowMode) {
                 $overlay.css('width', $container.outerWidth());
@@ -190,53 +190,60 @@ $(document).ready(function () {
             }
         });
 
-        $overlay.bind('close', function(event) {
-            $overlay.fadeOut();
+        $overlay.bind('close', function bind_close(event) {
+            if ($overlay.attr('data-mpf-overlay') === 'loader') {
+                $overlay.hide();
+            } else {
+                $overlay.fadeOut();
+            }
         });
 
-        $('.close', $header).bind('click', function () {
+        $('.close', $header).bind('click', function bind_click_close() {
             $overlay.trigger('close');
         });
 
         return $overlay;
     }
 
-    mpfOverlaysInterval = setInterval(function () {
-        $('[data-mpf-overlay]').each(function (index, element) {
-            if (parsedOverlayIds.indexOf($(element).attr('data-mpf-overlay')) === -1) {
-                setOverlayGenericEvents($(element));
-            }
-        });
+    function each_overlays(index, element) {
+        if (parsedOverlayIds.indexOf($(element).attr('data-mpf-overlay')) === -1) {
+            setGenericEvents($(element));
+        }
+    }
 
-        $('[data-mpf-overlay-link]').each(function (index, element) {
-            var $link = $(element),
-                options = {},
-                overlayId = $link.attr('data-mpf-overlay-link');
+    function each_overlay_links(index, element) {
+        var $link = $(element),
+            options = {},
+            overlayId = $link.attr('data-mpf-overlay-link');
 
-            // We remove the overlay link attribute first not to be picked up by the next interval
-            $link.attr('data-mpf-overlay-link', null);
+        // We remove the overlay link attribute first not to be picked up by the next interval
+        $link.attr('data-mpf-overlay-link', null);
 
-            if ($link.attr('data-mpf-overlay-options')) {
-                options = $.parseQuerystring($link.attr('data-mpf-overlay-options'));
-            }
+        if ($link.attr('data-mpf-overlay-options')) {
+            options = $.parseQuerystring($link.attr('data-mpf-overlay-options'));
+        }
 
-            $link.bind('click', function () {
-                var id = overlayId, $overlay = $('[data-mpf-overlay="'+ id +'"]'), $loader = $('[data-mpf-overlay="loader"]');
+        $link.bind('click', function bind_click_link(index, element) {
+            var id = overlayId, $overlay = $('[data-mpf-overlay="'+ id +'"]'), $loader = $('[data-mpf-overlay="loader"]');
 
-                if ($overlay.length >= 1) {
-                    $overlay.trigger('open', options);
-                    return false;
-                }
-
-                $('section', $loader).spin(mpf.overlayLoaderOpts).parent().trigger('open');
-                mpf.loadResources(id, function () {
-                    $('section', $loader).spin(false).parent().trigger('close');
-
-                    setOverlayGenericEvents($('[data-mpf-overlay="'+ id +'"]')).trigger('open', options);
-                });
-
+            if ($overlay.length >= 1) {
+                $overlay.trigger('open', options);
                 return false;
+            }
+
+            $('section', $loader).spin(mpf.overlayLoaderOpts).parent().trigger('open');
+            mpf.loadResources(id, function loadOverlayResources() {
+                $('section', $loader).spin(false).parent().trigger('close');
+                setGenericEvents($('[data-mpf-overlay="'+ id +'"]')).trigger('open', options);
+                mpf.reloadGlobalEvents();
             });
+
+            return false;
         });
+    }
+
+    mpfOverlaysInterval = setInterval(function () {
+        $('[data-mpf-overlay]').each(each_overlays);
+        $('[data-mpf-overlay-link]').each(each_overlay_links);
     }, 150);
 });

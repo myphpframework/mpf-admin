@@ -26,24 +26,25 @@ $(document).ready(function () {
     });
 
     $('#username').validate('required username');
+    $('#password').validate('required password');
     $loginForm.submit(function () {
         $('[data-form-error-img]').remove();
 
         $loginForm.prop('action', mpf.restUrl+'user/'+$('#username').val()+'/login');
-        if ($('#new:checked').length == 1) {
+        if ($('#new:checked').length === 1) {
             $loginForm.prop('action', mpf.restUrl+'user/');
             $loginForm.prop('method', 'post');
         }
 
         $loginForm.validate(function (isValid, invalidFields) {
             if (!isValid) {
-                $loginForm.addFormErrors(invalidFields);
+                $loginForm.addErrors(invalidFields);
                 return;
             }
 
-            mpf.ajaxForm($loginForm, function (errors, response) {
+            $loginForm.ajaxSubmit(function (errors, response) {
                 if (errors) {
-                    $loginForm.addFormErrors(errors);
+                    $loginForm.addErrors(errors);
                     return;
                 }
 

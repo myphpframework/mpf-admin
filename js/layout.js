@@ -49,24 +49,34 @@ $(document).ready(function () {
         $('.handle img', $menu).click();
     }, 250);
 
-    // ########### Ajax Validation forms
-    $('input,select,textarea,checkbox,radio').on('addCheck', function (event, check) {
-        var $element = $(this), $form = $element.closest('form'), $label = $('label[for="'+$element.attr('id')+'"]', $form);
-        if (check == 'required') {
-            $('[data-form-check-required="'+$element.attr('name')+'"]', $label).remove();
-            $label.prepend('<span class="required" data-form-check-required="'+$element.attr('name')+'">*</span>');
+    mpf.globalEvents.push({
+        load: function() {
+            // ########### Ajax Validation forms
+            $('input,select,textarea').on('addCheck', function(event, check) {
+                var $element = $(this), $form = $element.closest('form'), $label = $('label[for="' + $element.attr('id') + '"]', $form);
+                if (check === 'required') {
+                    $('[data-form-check-required="' + $element.attr('name') + '"]', $label).remove();
+                    $label.prepend('<span class="required" data-form-check-required="' + $element.attr('name') + '">*</span>');
+                }
+            });
+
+            $('form,input,select,textarea').on('error', function(event, errorMsg) {
+                var $element = $(this), $form = $element.closest('form'), $label = $('label[for="' + $element.attr('name') + '"]', $form);
+                $('[data-form-error-img="' + $element.attr('name') + '"]', $form).remove();
+                $label.after('<img src="/mpf-admin/images/icons/16x16/error.png" width="16" height="16" data-form-error-img="' + $element.attr('name') + '" alt="error icon" title="' + errorMsg + '" />');
+
+                if ($('ul.error li', $form).length === 1) {
+                    $('ul.error li', $form).addClass('singleError');
+                } else {
+                    $('ul.error li', $form).removeClass('singleError');
+                }
+            });
+        },
+        unload: function() {
+            $('input,select,textarea').unbind('addCheck');
+            $('form,input,select,textarea').unbind('error');
         }
     });
+    mpf.reloadGlobalEvents();
 
-    $('form,input,select,textarea,checkbox,radio').on('error', function (event, errorMsg) {
-        var $element = $(this), $form = $element.closest('form'), $label = $('label[for="'+$element.attr('name')+'"]', $form);
-        $('[data-form-error-img="'+$element.attr('name')+'"]', $form).remove();
-        $label.after('<img src="/mpf-admin/images/icons/16x16/error.png" width="16" height="16" data-form-error-img="'+$element.attr('name')+'" alt="error icon" title="'+errorMsg+'" />');
-
-        if ($('ul.error li', $form).length == 1) {
-            $('ul.error li', $form).addClass('singleError');
-        } else {
-            $('ul.error li', $form).removeClass('singleError');
-        }
-    });
 });

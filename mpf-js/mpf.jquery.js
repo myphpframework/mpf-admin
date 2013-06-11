@@ -22,6 +22,7 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
         mpfResourcesInfo = null,
         mpfProofOfWorkIntervals = {};
 
+    mpf.globalEvents = [];
     mpf.overlayLoaderOpts = {
         lines: 17, // The number of lines to draw
         length: 50, // The length of each line
@@ -41,156 +42,99 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
         left: 'auto' // Left position relative to parent in px
     };
 
-    mpf.ajaxForm = function ajaxForm($form, callback) {
-        var data = [];
-
-        $('[type="radio"]:checked', $form).each(function (index, element) {
-            var $element = $(element);
-            data.push($element.attr('name') +'='+ $element.val());
-        });
-
-        $('[type="checkbox"]:checked', $form).each(function (index, element) {
-            var $element = $(element);
-            data.push($element.attr('name') +'[]='+ $element.val());
-        });
-
-        $('[type="text"],[type="password"],textarea,select').each(function (index, element) {
-            var $element = $(element);
-            data.push($element.attr('name') +'='+ $element.val());
-        });
-
-
-        $('fieldset', $form).prepend('<div class="spinnerWrapper">&nbsp;</div>');
-        $('.spinnerWrapper', $form).spin();
-        $('[type="submit"]', $form).hide();
-        $('ul.error', $form).remove();
-        return mpf.ajax($form.attr('action').replace('.html', ''), data.join('&'), $form.attr('method'), function (errors, response) {
-            if (errors) {
-                var $spinner = $('.spinnerWrapper', $form);
-                $('[type="submit"]', $form).show();
-                $spinner.spin(false);
-                $spinner.fadeOut(function () {
-                    $(this).remove();
-                });
-            }
-
-            callback(errors, response);
-        });
-    };
-
     /**
      * Returns what $.ajax() returns to be able to abort at any time
+     *
+     * @param {String} url
+     * @param {String} querystring
+     * @param {String} method
+     * @param {Function} callback
+     * @returns {@exp;$@pro;ajax@call;@call;always|@exp;@exp;$@pro;ajax@call;@call;always}
      */
-    mpf.ajax = function ajax(url, querystring, method, callback) {
+    mpf.ajax = function ajax() {
         var args = Array.prototype.slice.call(arguments),
             callback = args.pop(),
             url = args.shift(),
-            querystring = (args.length == 0 ? '' : args.shift()),
-            method = (args.length == 0 ? 'POST' : args.shift()),
+            querystring = (args.length === 0 ? '' : args.shift()),
+            method = (args.length === 0 ? 'POST' : args.shift()),
             dataType = 'jsonp';
 
-        if (typeof callback != 'function') {
+        if (typeof callback !== 'function') {
             throw new Error('A callback must be provided for all ajax calls');
-            return;
         }
 
         querystring = (!querystring ? 'PWD='+encodeURIComponent(document.location.href) : querystring+'&PWD='+encodeURIComponent(document.location.href));
 
         // if we are retrieving a static package.json files we change the datatype
         if (url.match(/mpfResourcesInfo/)) {
-            dataType = 'json'
+            dataType = 'json';
         }
 
         return $.ajax({
             type: method,
             url: url,
             dataType: dataType,
-            data: querystring,
-            error: function (error) {
-                if (error.readyState != 0) {
-                    var response = null;
+            data: querystring
+        }).always(function (response) {
+            if (response.hasOwnProperty('responseText')) {
+                if (response.readyState !== 0) {
+                    var errors = null;
                     try {
-                        response = JSON.parse(error.responseText);
-                        if (response.hasOwnProperty('error')) {
-                            response = response.error;
+                        errors = JSON.parse(response.responseText.replace(/^jQuery[0-9_\.]+\((.*)\)[;|]$/, "$1"));
+                        if (errors.hasOwnProperty('errors')) {
+                            errors = errors.errors;
                         }
                     } catch (e) {}
-                    callback(response, null);
-                }
-            },
-            success: function(response) {
-                if (!response) {
-                    callback('Unexpected error', response);
+                    callback(errors, null);
                 }
 
-                if (!response.hasOwnProperty('errors')) {
-                    callback(null, response);
-                } else if (response.hasOwnProperty('errors')) {
-                    callback(response.errors, response);
-                } else {
-                    callback('Unexpected error', response);
-                }
+                return;
+            }
+
+            if (!response) {
+                callback('Unexpected error', response);
+            }
+
+            if (!response.hasOwnProperty('errors')) {
+                callback(null, response);
+            } else if (response.hasOwnProperty('errors')) {
+                callback(response.errors, response);
+            } else {
+                callback('Unexpected error', response);
             }
         });
     };
 
+    /**
+     *
+     * @param {string} url
+     * @param {Function} callback
+     * @returns {@exp;mpf@call;ajax}
+     */
     mpf.ajaxGet = function ajaxGet(url, callback) {
         return mpf.ajax(url, null, 'GET', callback);
     };
 
-    mpf.loadResources = function loadResources(id, callback) {
-        loadMpfResourcesInfo(function () {
-            var prefix = '';
-            if (!mpfResourcesInfo.hasOwnProperty(id)) {
-                throw new Error('Could not find any package information for "'+ id +'", make sure its in the /js/mpfResourcesInfo.json and that you have flushed localstorage for the key "mpfResourcesInfo".');
-                return;
-            }
-
-            if (mpfResourcesInfo[id].hasOwnProperty('prefix')) {
-                prefix = mpfResourcesInfo[id]['prefix'] +'/';
-            }
-
-            // load template first if any
-            if (mpfResourcesInfo[id]['resources'].indexOf('html') !== -1) {
-                $(mpf.template(prefix + id, function  () {
-                    // load text second if any
-                    if (mpfResourcesInfo[id]['resources'].indexOf('text') !== -1) {
-                        mpf.text(prefix + id);
-                    }
-
-                    // load css third if any
-                    if (mpfResourcesInfo[id]['resources'].indexOf('css') !== -1) {
-                        $('<link rel="stylesheet" type="text/css" href="/mpf-admin/css/'+ prefix + id +'.css" >').appendTo('head');
-                    }
-
-                    // load js last if any
-                    if (mpfResourcesInfo[id]['resources'].indexOf('js') !== -1) {
-                        $.getScript('/mpf-admin/js/'+ prefix + id +'.js');
-                    }
-
-                    if (typeof callback == 'function') {
-                        callback();
-                    }
-                })).appendTo('body');
-            }
-        });
-    };
-
+    /**
+     *
+     * @param {Function} callback
+     * @returns {null}
+     */
     function loadMpfResourcesInfo(callback) {
         if (mpfResourcesInfo === null) {
             var storageIndex = 'mpfResourcesInfo:v'+ mpfResourcesVersion;
             if (localStorage && localStorage.hasOwnProperty(storageIndex)) {
                 mpfResourcesInfo = JSON.parse(localStorage[ storageIndex ]);
-                if (typeof callback == 'function') {
-                    callback();
+                if (typeof callback === 'function') {
+                    callback(mpfResourcesInfo);
                 }
                 return;
             }
 
             mpf.ajaxGet('/mpf-admin/js/mpfResourcesInfo.json', function (errors, result) {
+                var i = '';
                 if (errors) {
                     throw new Error(errors[0].msg);
-                    return;
                 }
 
                 if (localStorage) {
@@ -198,27 +142,74 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
                 }
 
                 // Remove previous versions of the resources' info
-                for (var i in localStorage) {
-                    if (/^mpfResourcesInfo/.test(i)) {
+                for (i in localStorage) {
+                    if (localStorage.hasOwnProperty(i) && /^mpfResourcesInfo/.test(i)) {
                         localStorage.removeItem(i);
                     }
                 }
                 mpfResourcesInfo = result;
 
-                if (typeof callback == 'function') {
-                    callback();
+                if (typeof callback === 'function') {
+                    callback(mpfResourcesInfo);
                 }
             });
             return;
         }
 
-        if (typeof callback == 'function') {
-            callback();
+        if (typeof callback === 'function') {
+            callback(mpfResourcesInfo);
         }
 
         return;
+    }
+
+    /**
+     *
+     * @param {String} id
+     * @param {Function} callback
+     * @returns {null}
+     */
+    mpf.loadResources = function loadResources(id, callback) {
+        loadMpfResourcesInfo(function (mpfResourcesInfo) {
+            var dir = '';
+            if (!mpfResourcesInfo.hasOwnProperty(id)) {
+                throw new Error('Could not find any package information for "'+ id +'", make sure its in the /js/mpfResourcesInfo.json and that you have flushed localstorage for the key "mpfResourcesInfo".');
+            }
+
+            if (mpfResourcesInfo[id].hasOwnProperty('dir')) {
+                dir = mpfResourcesInfo[id].dir +'/';
+            }
+
+            // load template first if any
+            if (mpfResourcesInfo[id].resources.indexOf('html') !== -1) {
+                $(mpf.template(dir + id, function () {
+                    // load text second if any
+                    if (mpfResourcesInfo[id].resources.indexOf('text') !== -1) {
+                        mpf.text(dir + id);
+                    }
+
+                    // load css third if any
+                    if (mpfResourcesInfo[id].resources.indexOf('css') !== -1) {
+                        $('<link rel="stylesheet" type="text/css" href="/mpf-admin/css/'+ dir + id +'.css" />').appendTo('head');
+                    }
+
+                    // load js last if any
+                    if (mpfResourcesInfo[id].resources.indexOf('js') !== -1) {
+                        $.getScript('/mpf-admin/js/'+ dir + id +'.js');
+                    }
+
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
+                })).appendTo('body');
+            }
+        });
     };
 
+    /**
+     *
+     * @returns {String}
+     */
     mpf.locale = function locale() {
         if ($.cookie('mpf_locale')) {
             return $.cookie('mpf_locale');
@@ -227,20 +218,47 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
         return 'en_CA';
     };
 
-    mpf.template = function template(filename, version, callback) {
+    /**
+     * Everytime markup is dynamicly added to the document this function should be called
+     * @returns {void}
+     */
+    mpf.reloadGlobalEvents = function reloadLayoutBinds() {
+        // Unload the binds
+        for (var i in mpf.globalEvents) {
+            if (mpf.globalEvents.hasOwnProperty(i)) {
+                mpf.globalEvents[i].unload();
+            }
+        }
+
+        // reload the binds
+        for (var i in mpf.globalEvents) {
+            if (mpf.globalEvents.hasOwnProperty(i)) {
+                mpf.globalEvents[i].load();
+            }
+        }
+    }
+
+    /**
+     *
+     * @param {String} filename
+     * @param {String} version
+     * @param {Function} callback
+     * @returns {String}
+     */
+    mpf.template = function template() {
         var args = Array.prototype.slice.call(arguments),
             filename = args.shift(),
-            callback = args.pop();
+            callback = args.pop(),
+            version = mpfResourcesVersion;
 
-        filename = filename.replace('/', '::');
-
-        version = mpfResourcesVersion;
-        if (args.length != 0) {
+        if (args.length !== 0) {
             version = args.shift();
         }
 
+        filename = filename.replace('/', '::');
+
         if (mpfTemplates.hasOwnProperty(filename)) {
-            if (typeof callback == 'function') {
+            if (typeof callback === 'function') {
                 setTimeout(function () { callback(); }, 50);
             }
 
@@ -250,7 +268,7 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
         var localStorageIndex = 'mpfTemplates/'+ filename;
         if (localStorage && localStorage.hasOwnProperty(localStorageIndex +'/v'+ version)) {
             mpfTemplates[ filename ] = JSON.parse(localStorage[ localStorageIndex +'/v'+ version ]);
-            if (typeof callback == 'function') {
+            if (typeof callback === 'function') {
                 setTimeout(function () { callback(); }, 50);
             }
             return mpfTemplates[ filename ];
@@ -258,16 +276,18 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
 
         if (!mpfTemplateAjax.hasOwnProperty(filename)) {
             mpfTemplateAjax[filename] = mpf.ajaxGet(mpf.restUrl+'template/'+ filename, function (errors, response) {
+                var i = '';
                 if (errors) {
                     throw new Error(errors[0].msg);
-                    return;
                 }
 
                 // Remove previous versions of the filename
-                for (var i in localStorage) {
-                    var fileRegex = new RegExp(localStorageIndex, "g");
-                    if (fileRegex.test(i)) {
-                        localStorage.removeItem(i);
+                for (i in localStorage) {
+                    if (localStorage.hasOwnProperty(i)) {
+                        var fileRegex = new RegExp(localStorageIndex, "g");
+                        if (fileRegex.test(i)) {
+                            localStorage.removeItem(i);
+                        }
                     }
                 }
 
@@ -285,7 +305,7 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
                     var $element = $(element);
                     $element.replaceWith(mpfTemplates[$element.attr('data-mpf-template')]);
 
-                    if (typeof callback == 'function') {
+                    if (typeof callback === 'function') {
                         callback();
                     }
                 });
@@ -297,26 +317,34 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
         return '<span data-mpf-template="'+ filename +'">&nbsp;</span>';
     };
 
-
-    mpf.text = function text(filename, id, replacements, version) {
+    /**
+     *
+     * @param {type} filename
+     * @param {type} id
+     * @param {type} replacements
+     * @param {type} version
+     * @returns {String}
+     */
+    mpf.text = function text() {
         var args = Array.prototype.slice.call(arguments),
             filename = args.shift(),
             id = args.shift(),
-            replacements = args.shift();
+            replacements = args.shift(),
+            version = mpfResourcesVersion;
 
-        filename = filename.replace('/', '::');
-
-        version = mpfResourcesVersion;
-        if (args.length != 0) {
-            if (typeof args[ args.length-1 ] == 'string') {
+        if (args.length !== 0) {
+            if (typeof args[ args.length-1 ] === 'string') {
                 version = args.shift();
-            } else if(typeof args[ args.length-1 ] == 'object') {
+            } else if(typeof args[ args.length-1 ] === 'object') {
                 replacements = args.shift();
             }
         }
 
+        filename = filename.replace('/', '::');
+
         function replaceKeyValues (text, kv) {
-            for (var key in kv) {
+            var key = '';
+            for (key in kv) {
                 if (kv.hasOwnProperty(key)) {
                     text = text.replace(key, kv[key]);
                 }
@@ -336,16 +364,18 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
 
         if (!mpfTextAjax.hasOwnProperty(filename)) {
             mpfTextAjax[filename] = mpf.ajaxGet(mpf.restUrl +'text/'+ filename, function (errors, response) {
+                var i = '';
                 if (errors) {
                     throw new Error(errors[0].msg);
-                    return;
                 }
 
                 // Remove previous versions of the filename
-                for (var i in localStorage) {
-                    var fileRegex = new RegExp(localStorageIndex, "g");
-                    if (fileRegex.test(i)) {
-                        localStorage.removeItem(i);
+                for (i in localStorage) {
+                    if (localStorage.hasOwnProperty(i)) {
+                        var fileRegex = new RegExp(localStorageIndex, "g");
+                        if (fileRegex.test(i)) {
+                            localStorage.removeItem(i);
+                        }
                     }
                 }
 
@@ -380,15 +410,15 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
     mpf.verifyProofOfWork = function verifyProofOfWork(message, h, difficulty) {
         var hash = sha256_digest(message), diff = difficulty.toString().replace(/[^0]/, '');
 
-        if (message.length != 65) {
+        if (message.length !== 65) {
             return false;
         }
 
-        if (hash != h) {
+        if (hash !== h) {
             return false;
         }
 
-        if (diff == hash.toString().substr(0, diff.length)) {
+        if (diff === hash.toString().substr(0, diff.length)) {
             return true;
         }
         return false;
@@ -401,10 +431,9 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
             if (diff.length <= 0) {
                 clearInterval(mpfProofOfWorkIntervals[ id ]);
                 throw new Error('proofOfWork requires the difficulty to be a series of zeros');
-                return;
             }
 
-            if (diff == hash.toString().substr(0, diff.length)) {
+            if (diff === hash.toString().substr(0, diff.length)) {
                 mpf.trigger('pfw_end:'+id, [hash.toString(), message]);
                 clearInterval(mpfProofOfWorkIntervals[ id ]);
                 return;
@@ -414,11 +443,17 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
         }, 1);
     };
 
-    $('[data-mpf-tooltip]').each(function () {
-        var $element = $(this), $label = $element.find('> label'), $section = $element.find('> section'), $arrow = null;
+    /**
+     *
+     * @param {type} index
+     * @param {type} element
+     * @returns {null}
+     */
+    function each_tooltip(index, element) {
+        var $element = $(element), $label = $element.find('> label'), $section = $element.find('> section'), $arrow = null;
 
         $element.append('<span class="triangle">&nbsp;</span>');
-        $arrow = $element.find('> span')
+        $arrow = $element.find('> span');
 
         $label.mouseenter(function () {
             $section.css('margin-top', '-'+($section.outerHeight()/2)+'px');
@@ -430,5 +465,7 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
             $section.stop(true, true).fadeOut();
             $arrow.stop(true, true).fadeOut();
         });
-    });
-})();
+    }
+
+    $('[data-mpf-tooltip]').each(each_tooltip);
+}());

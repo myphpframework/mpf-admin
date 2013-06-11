@@ -30,10 +30,6 @@ class User extends \MPF\REST\Service {
         $this->setResponseCode(self::HTTPCODE_NOT_IMPLEMENTED);
     }
 
-    protected function reset_password($id, $data) {
-        $this->setResponseCode(self::HTTPCODE_NOT_IMPLEMENTED);
-    }
-
     protected function create($id, $data) {
         $this->validate(array('POST'), array('username', 'password'));
 
@@ -78,6 +74,45 @@ class User extends \MPF\REST\Service {
         exit;
     }
 
+   /**
+     *
+     * @throws \MPF\REST\Service\Exception\InvalidRequestMethod
+     * @throws \MPF\REST\Service\Exception\MissingRequestFields
+     * @throws \MPF\REST\Service\Exception\InvalidCredentials
+     * @param string $id
+     * @param array $data
+     */
+    protected function resetPassword($id, $data) {
+        $this->validate(array('PUT'), array('username'));
+        $id = filter_var($id, FILTER_SANITIZE_STRING);
+
+        $user = Usr::byUsername($id);
+        if (!$user) {
+            $this->setResponseCode(self::HTTPCODE_NOT_FOUND);
+            return array('errors' => array(
+                array('code' => self::HTTPCODE_NOT_FOUND, 'msg' => Text::byXml('mpf_user')->get('usernameNotFound', array('Replace' => array('username' => $id))))
+            ));
+        }
+
+        if ($user->getPassword() !== null || $user->getId() == 1) {
+            $this->setResponseCode(self::HTTPCODE_BAD_REQUEST);
+            return array('errors' => array(
+                array('code' => self::HTTPCODE_BAD_REQUEST, 'msg' => Text::byXml('mpf_user')->get('cannotResetPassword', array('Replace' => array('username' => $id))))
+            ));
+        }
+
+        if (isSet($data['newPassword'])) {
+            $exception = new Service\Exception\MissingRequestFields('newPassword');
+            Logger::Log('Service', $exception->getMessage(), Logger::LEVEL_WARNING, Logger::CATEGORY_FRAMEWORK | Logger::CATEGORY_SERVICE);
+            throw $exception;
+        }
+
+        $this->setResponseCode(self::HTTPCODE_OK);
+        $newPassword = filter_var($data['newPassword'], FILTER_SANITIZE_STRING);
+        $user->setPassword($newPassword);
+        $user->save();
+    }
+
     /**
      *
      * @throws \MPF\REST\Service\Exception\InvalidRequestMethod
@@ -93,10 +128,15 @@ class User extends \MPF\REST\Service {
         $this->setResponseCode(self::HTTPCODE_OK);
 
         $user = Usr::byUsername($id);
-        if ($user && $user->verifyPassword($data['password'])) {
-            Logger::Log('Service\User', Text::byXml('mpf_exception')->get('serviceUserSuccessfulLogin', array('Replace' => array('username' => $id, 'id' => $user->getId()))), Logger::LEVEL_WARNING, Logger::CATEGORY_FRAMEWORK | Logger::CATEGORY_SERVICE);
-            $_SESSION['userId'] = $user->getId();
-            return;
+        if ($user) {
+            // if we found the user we save it to update the last login attempt to the current time
+            $user->save();
+
+            if ($user->verifyPassword($data['password'])) {
+                Logger::Log('Service\User', Text::byXml('mpf_exception')->get('serviceUserSuccessfulLogin', array('Replace' => array('username' => $id, 'id' => $user->getId()))), Logger::LEVEL_WARNING, Logger::CATEGORY_FRAMEWORK | Logger::CATEGORY_SERVICE);
+                $_SESSION['userId'] = $user->getId();
+                return;
+            }
         }
 
         $exception = new Exception\InvalidCredentials();

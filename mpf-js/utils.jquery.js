@@ -1,8 +1,9 @@
+"use strict";
 var proofOfWorkIntervals= {};
 
 jQuery.extend({
     parseQuerystring: function(string) {
-        if (typeof(string) != "undefined") {
+        if (typeof(string) !== "undefined") {
             var a = document.createElement('a');
             if (!string.match(/^\?/) && !string.match(/\?/)) {
                 string = '?' + string;
@@ -12,7 +13,7 @@ jQuery.extend({
         }
 
         var nvpair = {};
-        var qs = (typeof(string) == "undefined" ? window.location.search.replace('?', '') : string);
+        var qs = (typeof(string) === "undefined" ? window.location.search.replace('?', '') : string);
         var pairs = qs.split('&');
         $.each(pairs, function(i, v) {
             var pair = v.split('=');
@@ -21,11 +22,13 @@ jQuery.extend({
         return nvpair;
     },
     randomString: function randomString(length) {
-        var text = "";
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var text = "",
+            possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
+            i = 0;
 
-        for (var i = 0; i < length; i++) {
+        while (i < length) {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
+            i++;
         }
         return text;
     }

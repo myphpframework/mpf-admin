@@ -24,7 +24,7 @@ var formsValidations = {},
     creditcard: function (element) {
         var value = $(element).val().replace(/[^0-9]+/, '').substr(0, 16);
 
-        if (element.value != value) {
+        if (element.value !== value) {
             element.value = value;
         }
 
@@ -32,7 +32,7 @@ var formsValidations = {},
         if (cardDigits.length >= 13 && cardDigits.length <= 16) {
             var total = 0;
             cardDigits.reverse().forEach(function (digit, index) {
-                if ((index % 2) != 0) {
+                if ((index % 2) !== 0) {
                     var timestwo = (parseInt(digit, 10) * 2);
                     if (timestwo > 9) {
                         timestwo.toString().split('').forEach(function (digit) {
@@ -46,7 +46,7 @@ var formsValidations = {},
                 }
             });
 
-            if ((total % 10) == 0) {
+            if ((total % 10) === 0) {
                 return true;
             }
         }
@@ -67,7 +67,7 @@ var formsValidations = {},
         }
 
         // set default states accordingly
-        if (country == 'CA' && $('[name=state]', $element.closest('form')).val() == '0') {
+        if (country === 'CA' && $('[name=state]', $element.closest('form')).val() === '0') {
             $('[name=state]', $element.closest('form')).val('QC');
         }
 
@@ -79,7 +79,7 @@ var formsValidations = {},
             state = $(element).val();
 
         // state is optionnal except for US & CA
-        if (state == 0 && country != 'US' && country != 'CA') {
+        if (state === 0 && country !== 'US' && country !== 'CA') {
             return true;
         }
 
@@ -91,12 +91,12 @@ var formsValidations = {},
     },
     phone: function (element) {
         var value = $(element).val().replace(/[^0-9+\.x]+/, '');
-        if (element.value != value) {
+        if (element.value !== value) {
             element.value = value;
             return false;
         }
 
-        if (element.value.length < 10 && element.value != "") {
+        if (element.value.length < 10 && element.value !== "") {
             return false;
         }
         return true;
@@ -109,7 +109,7 @@ var formsValidations = {},
     },
     password: function (element) {
         var value = $(element).val();
-        if (value.length < 8 && value.length != 0) {
+        if (value.length < 8 && value.length !== 0) {
             return false;
         }
         return true;
@@ -148,33 +148,33 @@ var formsValidations = {},
         }
 
         // remove all the classes that starts with mpfStrength
-        $('[data-mpf-password-strength="'+element.name+'"]').removeClass(function (index, css) {
+        $('[data-mpf-password-strength-meter="'+element.name+'"]').removeClass(function (index, css) {
             return (css.match(/\bmpfStrength\S+/g) || []).join(' ');
         });
 
         if (strength < 50) {
-            $('[data-mpf-password-strength="'+element.name+'"]').addClass('mpfStrengthLow');
+            $('[data-mpf-password-strength-meter="'+element.name+'"]').addClass('mpfStrengthLow');
         } else if (strength >= 50 && strength <= 80) {
-            $('[data-mpf-password-strength="'+element.name+'"]').addClass('mpfStrengthMedium');
+            $('[data-mpf-password-strength-meter="'+element.name+'"]').addClass('mpfStrengthMedium');
         } else if (strength > 80) {
-            $('[data-mpf-password-strength="'+element.name+'"]').addClass('mpfStrengthHigh');
+            $('[data-mpf-password-strength-meter="'+element.name+'"]').addClass('mpfStrengthHigh');
         }
 
-        strength = ($element.width() * (strength/100));
-        $('[data-mpf-password-strength="'+element.name+'"]').css('width', strength +'px');
+        strength = ($element.width() * (strength/100)) + 5;
+        $('[data-mpf-password-strength-meter="'+element.name+'"]').css('width', strength +'px');
     },
     passwordConfirm: function (element) {
         // find the password field
         var formName = $(element).closest('form').attr('name'), passwordField = null;
         formsValidations[ formName ].forEach(function (field) {
-            if (field.element.getAttribute('type') == 'password'
-              && field.element.getAttribute('name') != element.getAttribute('name')) {
+            if (field.element.getAttribute('type') === 'password'
+              && field.element.getAttribute('name') !== element.getAttribute('name')) {
                 passwordField = field;
             }
         });
 
         // verify if the it matchs the password
-        if (passwordField && $(passwordField.element).val() == $(element).val()) {
+        if (passwordField && $(passwordField.element).val() === $(element).val()) {
             return true;
         }
 
@@ -182,7 +182,7 @@ var formsValidations = {},
     },
     numeric: function (element) {
         var value = $(element).val().replace(/[^0-9]+/, '');
-        if (element.value != value) {
+        if (element.value !== value) {
             element.value = value;
             return false;
         }
@@ -190,7 +190,7 @@ var formsValidations = {},
     },
     username: function (element) {
         var value = $(element).val().replace(/[^a-zA-Z0-9 \-\'_]/, '');
-        if (element.value != value) {
+        if (element.value !== value) {
             element.value = value;
             return false;
         }
@@ -198,7 +198,7 @@ var formsValidations = {},
     },
     name: function (element) {
         var value = $(element).val().replace(/[^a-zA-Z0-9áãåàâäçéëèêíïìîñóõòôöùûúüýÿßæðøÁÃÅÀÂÄÇÉËÈÊÍÏÌÎÓÕÒÔÖÙÛÚÜÝ?., \-\']/, '');
-        if (element.value != value || value.length > 25) {
+        if (element.value !== value || value.length > 25) {
             element.value = value;
             return false;
         }
@@ -212,14 +212,14 @@ var formsValidations = {},
     },
     alphanumeric: function (element) {
         var value = $(element).val().replace(/[^a-zA-Z0-9áãåàâäçéëèêíïìîñóõòôöùûúüýÿßæðø]+/, '');
-        if (element.value != value) {
+        if (element.value !== value) {
             element.value = value;
             return false;
         }
         return true;
     },
     required: function (element) {
-        if (element.getAttribute('type') == 'checkbox') {
+        if (element.getAttribute('type') === 'checkbox') {
             // if its a checkbox we need to verify other box to see if atleast one is checked
             var isChecked = false;
             $('[name="'+element.getAttribute('name')+'"]', $(element).closest('form')).each(function (index, element) {
@@ -231,33 +231,33 @@ var formsValidations = {},
             return isChecked;
         }
 
-        if (element.getAttribute('type') == 'radio') {
+        if (element.getAttribute('type') === 'radio') {
             var val = $('[name="'+element.getAttribute('name')+'"]:checked', $(element).closest('form'));
-            if (val.length == 0) {
+            if (val.length === 0) {
                 return false;
             }
             return true;
         }
 
-        if (element.getAttribute('data-value') && $(element).val() == element.getAttribute('data-value')) {
+        if (element.getAttribute('data-value') && $(element).val() === element.getAttribute('data-value')) {
             return false;
         }
 
-        return ($(element).val() == '' ? false : true);
+        return ($(element).val() === '' ? false : true);
     }
 };
 
 $.fn.unvalidate = function removeValidate() {
     return this.stop().each(function() {
         var formName = $(this).closest('form').attr('name');
-        formName = (typeof formName == 'undefined' ? 'default' : formName);
+        formName = (typeof formName === 'undefined' ? 'default' : formName);
         if (!formsValidations.hasOwnProperty(formName)) {
             return;
         }
 
         // find the element and remove it from the checks
         for (var i=0; i < formsValidations[formName].length; i++) {
-            if (formsValidations[formName][i].element == this) {
+            if (formsValidations[formName][i].element === this) {
                 $('[data-mpf-password-strength="'+formsValidations[formName][i].element.name+'"]').remove();
                 formsValidations[formName].splice(i, 1);
                 return;
@@ -272,7 +272,7 @@ $.fn.validate = function validate() {
         eventString = '',
         checkString = '';
 
-    if (typeof args[args.length-1] == 'function') {
+    if (typeof args[args.length-1] === 'function') {
         callback = args.pop();
     }
     checkString = (args.length <= 2 ? args[0] : '');
@@ -280,22 +280,27 @@ $.fn.validate = function validate() {
 
     return this.stop().each(function(){
         var checks = (checkString ? checkString.split(' ') : []),
-            element = this;
+            element = this,
+            formName = $(element).closest('form').attr('name');
 
-        var formName = $(element).closest('form').attr('name');
-        formName = (formName == undefined ? 'default' : formName);
+        if (['form','input','select','textarea'].indexOf(element.tagName.toLowerCase()) === -1) {
+            console.error('The function .validate may only be used on folowing elements: form,input,select,textarea');
+            return;
+        }
+
+        formName = (formName === undefined ? 'default' : formName);
         if (!formsValidations.hasOwnProperty(formName)) {
             formsValidations[formName] = [];
         }
 
         // if we call validate on a form element we validate all fields that have events on them
-        if ('form' == element.tagName.toLowerCase()) {
+        if ('form' === element.tagName.toLowerCase()) {
             var isAllValid = true, invalidFields = [];
 
             // for all events that were bound we verify them
             for (var i=0; i < formsValidations[formName].length; i++) {
                 var isFieldValid = true, invalidChecks = [], event = formsValidations[formName][i];
-                if (event.checks.indexOf('required') != -1 && !validations.required(event.element)) {
+                if (event.checks.indexOf('required') !== -1 && !validations.required(event.element)) {
                     invalidChecks.push('required');
                     isFieldValid = false;
                     isAllValid = false;
@@ -303,7 +308,7 @@ $.fn.validate = function validate() {
                     // verify all the checks for this element
                     for (var j=0; j < event.checks.length; j++) {
                         var check = event.checks[j];
-                        if (check != 'required' && validations.hasOwnProperty(check)) {
+                        if (check !== 'required' && validations.hasOwnProperty(check)) {
                             var isValid = validations[check](event.element);
                             isFieldValid &= isValid;
                             isAllValid &= isValid;
@@ -325,7 +330,7 @@ $.fn.validate = function validate() {
                 }
             }
 
-            if (callback != null) {
+            if (callback !== null) {
                 callback.call(element, isAllValid, invalidFields);
             }
             return;
@@ -334,7 +339,7 @@ $.fn.validate = function validate() {
         // verify if the check is not already added before adding it again
         var alreadyBound = false;
         for (var i=0; i < formsValidations[formName].length; i++) {
-            if (formsValidations[formName][i].element == element) {
+            if (formsValidations[formName][i].element === element) {
                 alreadyBound = true;
             }
         }
@@ -345,10 +350,6 @@ $.fn.validate = function validate() {
                 checks: checks,
                 element: element
             });
-        }
-
-        if (checks.indexOf('passwordStrength') !== -1) {
-            $('<div data-mpf-password-strength="'+element.name+'">&nbsp;</div>').insertAfter(element);
         }
 
         if (checks.length > 0) {
@@ -365,7 +366,7 @@ $.fn.validate = function validate() {
                     }
                 }
 
-                if (callback != null) {
+                if (callback !== null) {
                     callback.call(element, isValid);
                 }
             });
@@ -373,38 +374,105 @@ $.fn.validate = function validate() {
     });
 };
 
-$.fn.addFormErrors = function addFormErrors(invalidFields) {
-    var $form = $(this), $errors = $('<ul class="error">');
-    $('ul.error', $form).remove();
-    $('.error', $form).removeClass('error');
+$.fn.addErrors = function addErrors(invalidFields) {
+    return this.stop().each(function() {
+        var $form = $(this), $errors = $('<ul class="error">');
+        $('ul.error', $form).remove();
+        $('.error', $form).removeClass('error');
 
-    $('fieldset', $form).prepend($errors);
-    invalidFields.forEach(function (field) {
-        var $element = $(field.element),
-            $label = $('label[for="'+$element.attr('name')+'"]');
-
-        // Custom error ?
-        if (field.hasOwnProperty('msg')) {
-            var errorMsg = field.msg;
-            if (field.hasOwnProperty('code')) {
-                errorMsg = field.code +': '+ field.msg;
-            }
-
-            $errors.append('<li>'+ errorMsg +'</li>');
-            if (field.hasOwnProperty('element')) {
-                $element.trigger('error', field.msg.replace(/"/g, '&quot;'));
-            } else {
-                $form.trigger('error', field.msg.replace(/"/g, '&quot;'));
-            }
-        } else {
-            field.failedChecks.forEach(function (check) {
-                var errorMsg = mpf.text('mpf_validations', check, {'@field@': $label.text()});
-                $errors.append('<li>'+ errorMsg +'</li>');
-                $element.trigger('error', errorMsg.replace(/"/g, '&quot;'));
-            });
+        if (['form'].indexOf($form.prop("tagName").toLowerCase()) === -1) {
+            console.error('The function .addErrors may only be used on form elements');
+            return;
         }
 
-        $label.addClass('error');
-        $element.addClass('error');
+        $('fieldset:visible', $form).prepend($errors);
+        invalidFields.forEach(function (field) {
+            var $element = $(field.element),
+                $label = $('label[for="'+$element.attr('name')+'"]');
+
+            // Custom error ?
+            if (field.hasOwnProperty('msg')) {
+                var errorMsg = field.msg;
+                if (field.hasOwnProperty('code')) {
+                    errorMsg = field.code +': '+ field.msg;
+                }
+
+                $errors.append('<li>'+ errorMsg +'</li>');
+                if (field.hasOwnProperty('element')) {
+                    $element.trigger('error', field.msg.replace(/"/g, '&quot;'));
+                } else {
+                    $form.trigger('error', field.msg.replace(/"/g, '&quot;'));
+                }
+            } else {
+                field.failedChecks.forEach(function (check) {
+                    var errorMsg = mpf.text('mpf_validations', check, {'@field@': $label.text()});
+                    $errors.append('<li>'+ errorMsg +'</li>');
+                    $element.trigger('error', errorMsg.replace(/"/g, '&quot;'));
+                });
+            }
+
+            $label.addClass('error');
+            $element.addClass('error');
+        });
     });
-}
+};
+
+$.fn.resetForm = function resetForm() {
+    return this.stop().each(function() {
+        var $form = $(this);
+        if (['form'].indexOf($form.prop("tagName").toLowerCase()) === -1) {
+            console.error('The function .resetForm may only be used on form elements');
+            return;
+        }
+
+        $('input:not([type="submit"]),select,textarea', $form).val('');
+        $('.spinnerWrapper', $form).remove();
+        $('ul.error', $form).remove();
+        $('.error', $form).removeClass('error');
+        $('[data-form-error-img]', $form).remove();
+    });
+};
+
+$.fn.ajaxSubmit = function ajaxSubmit(callback) {
+    return this.stop().each(function() {
+        var data = [], $form = $(this);
+
+        if (['form'].indexOf($form.prop("tagName").toLowerCase()) === -1) {
+            console.error('The function .ajaxSubmit may only be used on form elements');
+            return;
+        }
+
+        $('[type="radio"]:checked', $form).each(function (index, element) {
+            var $element = $(element);
+            data.push($element.attr('name') +'='+ $element.val());
+        });
+
+        $('[type="checkbox"]:checked', $form).each(function (index, element) {
+            var $element = $(element);
+            data.push($element.attr('name') +'[]='+ $element.val());
+        });
+
+        $('[type="text"],[type="password"],textarea,select').each(function (index, element) {
+            var $element = $(element);
+            data.push($element.attr('name') +'='+ $element.val());
+        });
+
+
+        $('fieldset', $form).prepend('<div class="spinnerWrapper">&nbsp;</div>');
+        $('.spinnerWrapper', $form).spin();
+        $('[type="submit"]', $form).hide();
+        $('ul.error', $form).remove();
+        return mpf.ajax($form.attr('action').replace('.html', ''), data.join('&'), $form.attr('method'), function (errors, response) {
+            if (errors) {
+                var $spinner = $('.spinnerWrapper', $form);
+                $('[type="submit"]', $form).show();
+                $spinner.spin(false);
+                $spinner.fadeOut(function () {
+                    $(this).remove();
+                });
+            }
+
+            callback(errors, response);
+        });
+    });
+};

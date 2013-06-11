@@ -21,9 +21,6 @@ form[name="login"] fieldset {
 }
 
 [data-mpf-tooltip="passwordStrength"] > section ul {
-}
-
-[data-mpf-tooltip="passwordStrength"] > section ul {
     list-style: none;
     padding-left: 1em;
 }

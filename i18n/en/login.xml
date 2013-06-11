@@ -3,12 +3,12 @@
 <i18n>
     <country code="CA">
         <text id="title">Login &amp; Registration</text>
-        <text id="pgpPublicKey">PGP Public Key</text>
         <text id="username">Username</text>
         <text id="password">Password</text>
+        <text id="passwordStrength">Password Strength</text>
         <text id="newUser">I am a new user</text>
         <text id="passwordConfirm">Confirm password</text>
-        <text id="passwordLost">[url="#" data-mpf-overlay-link="lostPassword"]Recover your password![/url]</text>
+        <text id="passwordLost">[url="#" data-mpf-overlay-link="resetPassword"]Reset password[/url]</text>
         <text id="submit">Submit</text>
         <text id="firstUser">You are the first user to access the mpf-admin and thus will be granted administrative privileges.</text>
         <text id="passwordStrengthTitle">Password Strength</text>

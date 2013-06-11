@@ -238,11 +238,15 @@ p.information {
 .spinnerWrapper {
     background-color: rgba(255,255,255,0.85);
     position: absolute;
-    width: 98%;
+    width: 99%;
     height: 98%;
     left: -2px;
     top: -2px;
     z-index: 500;
+}
+
+.spinnerWrapper .spinner {
+    top: 50% !important;
 }
 
 [data-mpf-overlay] {
@@ -259,7 +263,6 @@ p.information {
 
     display: none;
     z-index: 5000;
-    text-align: center;
 }
 
 [data-mpf-overlay] > section {
@@ -305,6 +308,7 @@ p.information {
 }
 
 [data-mpf-overlay] > section > div {
+    padding: 2px;
 }
 
 [data-mpf-overlay] > section > footer {
@@ -332,6 +336,7 @@ p.information {
 
 [data-mpf-tooltip] {
     position: relative;
+    text-align: left;
 }
 
 [data-mpf-tooltip] img {

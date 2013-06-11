@@ -3,7 +3,16 @@ form > fieldset {
     margin: 32px auto;
     position: relative;
     border: 1px solid #323337;
-    padding: 16px;
+    padding: 16px 16px 25px;
+}
+
+[data-mpf-overlay] form {
+    clear: both;
+}
+
+[data-mpf-overlay] form > fieldset {
+    margin: 0;
+    border: 0px;
 }
 
 form > fieldset legend {
@@ -23,6 +32,7 @@ form > fieldset > div {
 
 form > fieldset > div label {
     float: left;
+    clear:both;
     text-align: right;
     margin-right: 8px;
     font-size: 12px;
@@ -54,6 +64,7 @@ form > fieldset [type="submit"] {
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
+    z-index: 1000;
 }
 
 form span.required {
@@ -62,7 +73,7 @@ form span.required {
 }
 
 form [data-form-error-img] {
-    margin: -4px 4px 0 4px;
+    margin: -7px 0 0;
     vertical-align: middle;
     position: absolute;
     left: 40%;
@@ -101,45 +112,25 @@ form ul.error li.singleError {
 }
 
 form > fieldset [data-mpf-password-strength] {
-    bottom: 0;
-    font-size: 5px;
-    left: 43%;
-    position: absolute;
+    display: inline-block;
+    height: 22px;
+    width: 180px;
+    padding: 0;
+    overflow: hidden;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+form > fieldset [data-mpf-password-strength-meter] {
+    height: 18px;
     width: 1px;
-}
+    line-height: 18px;
+    padding: 2px;
 
-form > fieldset [data-mpf-password-strength].mpfStrengthLow {
-    background: #ff3019; /* Old browsers */
-    background: -moz-linear-gradient(top,  #ff3019 0%, #cf0404 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff3019), color-stop(100%,#cf0404)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #ff3019 0%,#cf0404 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #ff3019 0%,#cf0404 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #ff3019 0%,#cf0404 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #ff3019 0%,#cf0404 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3019', endColorstr='#cf0404',GradientType=0 ); /* IE6-9 */
-}
-
-form > fieldset [data-mpf-password-strength].mpfStrengthMedium {
-    background: #f6e6b4; /* Old browsers */
-    background: -moz-linear-gradient(top,  #f6e6b4 0%, #ed9017 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f6e6b4), color-stop(100%,#ed9017)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #f6e6b4 0%,#ed9017 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #f6e6b4 0%,#ed9017 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #f6e6b4 0%,#ed9017 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #f6e6b4 0%,#ed9017 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6e6b4', endColorstr='#ed9017',GradientType=0 ); /* IE6-9 */
-}
-
-
-form > fieldset [data-mpf-password-strength].mpfStrengthHigh {
-    background: #d2ff52; /* Old browsers */
-    background: -moz-linear-gradient(top,  #d2ff52 0%, #91e842 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d2ff52), color-stop(100%,#91e842)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #d2ff52 0%,#91e842 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #d2ff52 0%,#91e842 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #d2ff52 0%,#91e842 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #d2ff52 0%,#91e842 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2ff52', endColorstr='#91e842',GradientType=0 ); /* IE6-9 */
+    -moz-border-radius: 0 6px 6px 0;
+    -webkit-border-radius: 0 6px 6px 0;
+    border-radius: 0 6px 6px 0;
 }
 
 
