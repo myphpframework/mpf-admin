@@ -68,5 +68,6 @@
 <? foreach ($GLOBALS['jsFiles'] as $jsFile): ?>
 <script type="text/javascript" src="<?= $jsFile; ?>"></script>
 <? endforeach; ?>
+<?= 'Execute time: '.sprintf('%0.5f', (microtime(true) - TIMER_START)).' seconds<br />'; ?>
 </body>
 </html>

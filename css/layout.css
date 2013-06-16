@@ -8,6 +8,7 @@ body {
 body > nav > hr, body > hr {
   margin: 0 auto;
   border:0;
+  border-bottom: 1px solid #333;
 }
 
 body > header {
