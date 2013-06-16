@@ -83,7 +83,7 @@ class User extends \MPF\REST\Service {
      * @param array $data
      */
     protected function resetPassword($id, $data) {
-        $this->validate(array('PUT'), array('username'));
+        $this->validate(array('PUT'), array('reset_username'));
         $id = filter_var($id, FILTER_SANITIZE_STRING);
 
         $user = Usr::byUsername($id);
@@ -101,14 +101,14 @@ class User extends \MPF\REST\Service {
             ));
         }
 
-        if (isSet($data['newPassword'])) {
-            $exception = new Service\Exception\MissingRequestFields('newPassword');
+        if (!isSet($data['reset_password'])) {
+            $exception = new Service\Exception\MissingRequestFields('reset_password');
             Logger::Log('Service', $exception->getMessage(), Logger::LEVEL_WARNING, Logger::CATEGORY_FRAMEWORK | Logger::CATEGORY_SERVICE);
             throw $exception;
         }
 
         $this->setResponseCode(self::HTTPCODE_OK);
-        $newPassword = filter_var($data['newPassword'], FILTER_SANITIZE_STRING);
+        $newPassword = filter_var($data['reset_password'], FILTER_SANITIZE_STRING);
         $user->setPassword($newPassword);
         $user->save();
     }

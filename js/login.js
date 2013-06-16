@@ -25,6 +25,7 @@ $(document).ready(function () {
        $('.newUser').slideDown();
     });
 
+    $('#username').focus();
     $('#username').validate('required username');
     $('#password').validate('required password');
     $loginForm.submit(function () {

@@ -181,7 +181,9 @@ $(document).ready(function mpf_overlay_closure() {
             $container.hide();
             $overlay.fadeIn(function () {
                 $overlay.trigger('center');
-                $container.fadeIn();
+                $container.fadeIn(function () {
+                    $overlay.trigger('openned', options);
+                });
             });
 
             if (windowMode) {
@@ -233,9 +235,15 @@ $(document).ready(function mpf_overlay_closure() {
 
             $('section', $loader).spin(mpf.overlayLoaderOpts).parent().trigger('open');
             mpf.loadResources(id, function loadOverlayResources() {
+                var $overlay = $('[data-mpf-overlay="'+ id +'"]');
                 $('section', $loader).spin(false).parent().trigger('close');
-                setGenericEvents($('[data-mpf-overlay="'+ id +'"]')).trigger('open', options);
                 mpf.reloadGlobalEvents();
+
+                // Make sure the interval did not pick it up first
+                if (parsedOverlayIds.indexOf($overlay.attr('data-mpf-overlay')) === -1) {
+                    setGenericEvents($overlay);
+                }
+                $overlay.trigger('open', options);
             });
 
             return false;

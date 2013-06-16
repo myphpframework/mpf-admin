@@ -170,6 +170,7 @@ class REST {
                 if (is_array($value)) {
                     $data[$key] = sanitize($value);
                 } else {
+                    $data[$key] = urldecode($data[$key]);
                     $data[$key] = filter_var($data[$key], FILTER_SANITIZE_SPECIAL_CHARS);
                     $data[$key] = filter_var($data[$key], FILTER_SANITIZE_STRIPPED);
                 }

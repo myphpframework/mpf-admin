@@ -1,6 +1,6 @@
 "use strict";
 
-var mpf = $({});
+var mpf = mpf || $({});
 
 // Retrieve the query string of the src
 $('script[src*="mpf.jquery"]').each(function (index, item) {
@@ -195,7 +195,12 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
 
                     // load js last if any
                     if (mpfResourcesInfo[id].resources.indexOf('js') !== -1) {
-                        $.getScript('/mpf-admin/js/'+ dir + id +'.js');
+                        $.getScript('/mpf-admin/js/'+ dir + id +'.js', function () {
+                            if (typeof callback === 'function') {
+                                callback();
+                            }
+                        });
+                        return;
                     }
 
                     if (typeof callback === 'function') {
@@ -343,7 +348,7 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
         filename = filename.replace('/', '::');
 
         function replaceKeyValues (text, kv) {
-            var key = '';
+            var key = ''; text = text || '';
             for (key in kv) {
                 if (kv.hasOwnProperty(key)) {
                     text = text.replace(key, kv[key]);
@@ -455,17 +460,37 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
         $element.append('<span class="triangle">&nbsp;</span>');
         $arrow = $element.find('> span');
 
-        $label.mouseenter(function () {
+        $label.bind('mouseenter', function () {
             $section.css('margin-top', '-'+($section.outerHeight()/2)+'px');
             $section.stop(true, true).fadeIn();
             $arrow.stop(true, true).fadeIn();
         });
 
-        $label.mouseleave(function () {
+        $label.bind('mouseleave', function () {
             $section.stop(true, true).fadeOut();
             $arrow.stop(true, true).fadeOut();
         });
     }
 
-    $('[data-mpf-tooltip]').each(each_tooltip);
+    mpf.globalEvents.push({
+        load: function() {
+            $('[data-mpf-tooltip]').each(each_tooltip);
+        },
+        unload: function() {
+            $('[data-mpf-tooltip] > label').unbind('mouseenter');
+            $('[data-mpf-tooltip] > label').unbind('mouseleave');
+        }
+    });
 }());
+
+/*
+$.fn.bindFirst = function(name, fn) {
+    var elem, handlers, i, _len;
+    this.bind(name, fn);
+    for (i = 0, _len = this.length; i < _len; i++) {
+        elem = this[i];
+        handlers = jQuery._data(elem).events[name.split('.')[0]];
+        handlers.unshift(handlers.pop());
+    }
+};
+*/

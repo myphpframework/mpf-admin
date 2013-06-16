@@ -67,6 +67,27 @@ form > fieldset [type="submit"] {
     z-index: 1000;
 }
 
+form  > fieldset .success {
+    background-color: rgba(255, 255, 255, 0.85);
+    width: 99%;
+    height: 98%;
+    left: -2px;
+    top: -2px;
+    position: absolute;
+    z-index: 500;
+}
+
+form  > fieldset .success p {
+    color: green;
+    font-size: 1.5em;
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    width: 99%;
+    margin-top: -1em;
+    font-weight: bold;
+}
+
 form span.required {
     font-weight: bold;
     color: red;

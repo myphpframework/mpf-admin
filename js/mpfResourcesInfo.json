@@ -1,6 +1,6 @@
 {
     "resetPassword": {
-        "version": "0.1.2",
+        "version": "0.1.4",
         "dir": "overlays",
         "resources": ["html","css","js","text"]
     }

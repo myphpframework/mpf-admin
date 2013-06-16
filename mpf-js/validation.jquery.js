@@ -1,26 +1,15 @@
 "use strict";
 
-/*
-document.addEventListener("DOMNodeInserted", function(event) {
-    if (event.target.tagName == 'SCRIPT') {
-        var $script = $(event.target);
-        console.log($script.attr('src'));
-        throw "test";
-    }
-});
+var mpf = mpf || $({});
+mpf.forms = {};
 
-$.getScript('http://myphpframework.self/js/test.js', function() {
-    return false;
-});
-*/
+mpf.countries = ["AF","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","AW","AU","AT","AZ","BS","BH","BD","BB","BY","BE","BZ","BJ","BM","BT","BO","BA","BW","BV","BR","IO","BN","BG","BF","BI","KH","CM","CA","CV","KY","CF","TD","CL","CN","CX","CC","CO","KM","CG","CK","CR","CI","HR","CU","CY","CZ","DK","DJ","DM","DO","TP","EC","EG","SV","GQ","ER","EE","ET","FK","FO","FJ","FI","FR","FX","GF","PF","TF","GA","GM","GE","DE","GH","GI","GR","GL","GD","GP","GU","GT","GN","GW","GY","HT","HM","HN","HK","HU","IS","IN","ID","IR","IQ","IE","IL","IT","JM","JP","JO","KZ","KE","KI","KP","KR","KW","KG","LA","LV","LB","LS","LR","LY","LI","LT","LU","MO","MK","MG","MW","MY","MV","ML","MT","MH","MQ","MR","MU","YT","MX","FM","MD","MC","MN","MS","MA","MZ","MM","NA","NR","NP","NL","AN","NC","NZ","NI","NE","NG","NU","NF","MP","NO","OM","PK","PW","PA","PG","PY","PE","PH","PN","PL","PT","PR","QA","RE","RO","RU","RW","KN","LC","VC","WS","SM","ST","SA","SN","SC","SL","SG","SK","SI","SB","SO","ZA","GS","ES","LK","SH","PM","SD","SR","SJ","SZ","SE","CH","SY","TW","TJ","TZ","TH","TG","TK","TO","TT","TN","TR","TM","TC","TV","UG","UA","AE","GB","US","UM","UY","UZ","VU","VA","VE","VN","VG","VI","WF","EH","YE","YU","ZR","ZM","ZW","ME","RS"];
+mpf.states = {
+    CA: ["AB","BC","PE","MB","NB","NS","NV","ON","QC","SK","NL","NT","YK"],
+    US: ["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY","DC"]
+},
 
-var formsValidations = {},
-    countries = ["AF","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","AW","AU","AT","AZ","BS","BH","BD","BB","BY","BE","BZ","BJ","BM","BT","BO","BA","BW","BV","BR","IO","BN","BG","BF","BI","KH","CM","CA","CV","KY","CF","TD","CL","CN","CX","CC","CO","KM","CG","CK","CR","CI","HR","CU","CY","CZ","DK","DJ","DM","DO","TP","EC","EG","SV","GQ","ER","EE","ET","FK","FO","FJ","FI","FR","FX","GF","PF","TF","GA","GM","GE","DE","GH","GI","GR","GL","GD","GP","GU","GT","GN","GW","GY","HT","HM","HN","HK","HU","IS","IN","ID","IR","IQ","IE","IL","IT","JM","JP","JO","KZ","KE","KI","KP","KR","KW","KG","LA","LV","LB","LS","LR","LY","LI","LT","LU","MO","MK","MG","MW","MY","MV","ML","MT","MH","MQ","MR","MU","YT","MX","FM","MD","MC","MN","MS","MA","MZ","MM","NA","NR","NP","NL","AN","NC","NZ","NI","NE","NG","NU","NF","MP","NO","OM","PK","PW","PA","PG","PY","PE","PH","PN","PL","PT","PR","QA","RE","RO","RU","RW","KN","LC","VC","WS","SM","ST","SA","SN","SC","SL","SG","SK","SI","SB","SO","ZA","GS","ES","LK","SH","PM","SD","SR","SJ","SZ","SE","CH","SY","TW","TJ","TZ","TH","TG","TK","TO","TT","TN","TR","TM","TC","TV","UG","UA","AE","GB","US","UM","UY","UZ","VU","VA","VE","VN","VG","VI","WF","EH","YE","YU","ZR","ZM","ZW","ME","RS"],
-    states = {
-        'CA': ["AB","BC","PE","MB","NB","NS","NV","ON","QC","SK","NL","NT","YK"],
-        'US': ["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY","DC"]
-    },
-    validations = {
+mpf.validations = {
     creditcard: function (element) {
         var value = $(element).val().replace(/[^0-9]+/, '').substr(0, 16);
 
@@ -162,11 +151,12 @@ var formsValidations = {},
 
         strength = ($element.width() * (strength/100)) + 5;
         $('[data-mpf-password-strength-meter="'+element.name+'"]').css('width', strength +'px');
+        return true;
     },
     passwordConfirm: function (element) {
         // find the password field
         var formName = $(element).closest('form').attr('name'), passwordField = null;
-        formsValidations[ formName ].forEach(function (field) {
+        mpf.forms[ formName ].forEach(function (field) {
             if (field.element.getAttribute('type') === 'password'
               && field.element.getAttribute('name') !== element.getAttribute('name')) {
                 passwordField = field;
@@ -251,15 +241,14 @@ $.fn.unvalidate = function removeValidate() {
     return this.stop().each(function() {
         var formName = $(this).closest('form').attr('name');
         formName = (typeof formName === 'undefined' ? 'default' : formName);
-        if (!formsValidations.hasOwnProperty(formName)) {
+        if (!mpf.forms.hasOwnProperty(formName)) {
             return;
         }
 
         // find the element and remove it from the checks
-        for (var i=0; i < formsValidations[formName].length; i++) {
-            if (formsValidations[formName][i].element === this) {
-                $('[data-mpf-password-strength="'+formsValidations[formName][i].element.name+'"]').remove();
-                formsValidations[formName].splice(i, 1);
+        for (var i=0; i < mpf.forms[formName].length; i++) {
+            if (mpf.forms[formName][i].element === this) {
+                mpf.forms[formName].splice(i, 1);
                 return;
             }
         }
@@ -289,8 +278,8 @@ $.fn.validate = function validate() {
         }
 
         formName = (formName === undefined ? 'default' : formName);
-        if (!formsValidations.hasOwnProperty(formName)) {
-            formsValidations[formName] = [];
+        if (!mpf.forms.hasOwnProperty(formName)) {
+            mpf.forms[formName] = [];
         }
 
         // if we call validate on a form element we validate all fields that have events on them
@@ -298,9 +287,9 @@ $.fn.validate = function validate() {
             var isAllValid = true, invalidFields = [];
 
             // for all events that were bound we verify them
-            for (var i=0; i < formsValidations[formName].length; i++) {
-                var isFieldValid = true, invalidChecks = [], event = formsValidations[formName][i];
-                if (event.checks.indexOf('required') !== -1 && !validations.required(event.element)) {
+            for (var i=0; i < mpf.forms[formName].length; i++) {
+                var isFieldValid = true, invalidChecks = [], event = mpf.forms[formName][i];
+                if (event.checks.indexOf('required') !== -1 && !mpf.validations.required(event.element)) {
                     invalidChecks.push('required');
                     isFieldValid = false;
                     isAllValid = false;
@@ -308,8 +297,8 @@ $.fn.validate = function validate() {
                     // verify all the checks for this element
                     for (var j=0; j < event.checks.length; j++) {
                         var check = event.checks[j];
-                        if (check !== 'required' && validations.hasOwnProperty(check)) {
-                            var isValid = validations[check](event.element);
+                        if (check !== 'required' && mpf.validations.hasOwnProperty(check)) {
+                            var isValid = mpf.validations[check](event.element);
                             isFieldValid &= isValid;
                             isAllValid &= isValid;
 
@@ -338,14 +327,14 @@ $.fn.validate = function validate() {
 
         // verify if the check is not already added before adding it again
         var alreadyBound = false;
-        for (var i=0; i < formsValidations[formName].length; i++) {
-            if (formsValidations[formName][i].element === element) {
+        for (var i=0; i < mpf.forms[formName].length; i++) {
+            if (mpf.forms[formName][i].element === element) {
                 alreadyBound = true;
             }
         }
 
         if (!alreadyBound) {
-            formsValidations[formName].push({
+            mpf.forms[formName].push({
                 eventString: eventString,
                 checks: checks,
                 element: element
@@ -361,8 +350,8 @@ $.fn.validate = function validate() {
                 var isValid = true;
                 for (var i=0; i < checks.length; i++) {
                     var check = checks[i];
-                    if (validations.hasOwnProperty(check)) {
-                        isValid &= validations[check](element);
+                    if (mpf.validations.hasOwnProperty(check)) {
+                        isValid &= mpf.validations[check](element);
                     }
                 }
 
@@ -378,6 +367,7 @@ $.fn.addErrors = function addErrors(invalidFields) {
     return this.stop().each(function() {
         var $form = $(this), $errors = $('<ul class="error">');
         $('ul.error', $form).remove();
+        $('[data-form-error-img]', $form).remove();
         $('.error', $form).removeClass('error');
 
         if (['form'].indexOf($form.prop("tagName").toLowerCase()) === -1) {
@@ -444,21 +434,20 @@ $.fn.ajaxSubmit = function ajaxSubmit(callback) {
 
         $('[type="radio"]:checked', $form).each(function (index, element) {
             var $element = $(element);
-            data.push($element.attr('name') +'='+ $element.val());
+            data.push($element.attr('name') +'='+ encodeURIComponent($element.val()));
         });
 
         $('[type="checkbox"]:checked', $form).each(function (index, element) {
             var $element = $(element);
-            data.push($element.attr('name') +'[]='+ $element.val());
+            data.push($element.attr('name') +'[]='+ encodeURIComponent($element.val()));
         });
 
-        $('[type="text"],[type="password"],textarea,select').each(function (index, element) {
+        $('[type="hidden"],[type="text"],[type="password"],textarea,select', $form).each(function (index, element) {
             var $element = $(element);
-            data.push($element.attr('name') +'='+ $element.val());
+            data.push($element.attr('name') +'='+ encodeURIComponent($element.val()));
         });
 
-
-        $('fieldset', $form).prepend('<div class="spinnerWrapper">&nbsp;</div>');
+        $('fieldset:visible', $form).prepend('<div class="spinnerWrapper">&nbsp;</div>');
         $('.spinnerWrapper', $form).spin();
         $('[type="submit"]', $form).hide();
         $('ul.error', $form).remove();

@@ -22,14 +22,14 @@ $template->startContent();
         <fieldset>
             <legend><?= $loginText->get('title') ?></legend>
             <? if ($totalUsers == 1): ?><p class="information"><?= $loginText->get('firstUser') ?></p><? endif; ?>
-            <div><label for="username"><?= $loginText->get('username') ?></label><input type="text" name="username" id="username"/></div>
+            <div><label for="username"><?= $loginText->get('username') ?></label><input type="text" name="username" id="username" tabindex="1" /></div>
             <div>
                 <label for="password"><?= $loginText->get('password') ?></label>
-                <input type="password" name="password" id="password" />
+                <input type="password" name="password" id="password" tabindex="2" />
             </div>
             <div class="newUser">
                 <label><?= $loginText->get('passwordStrength') ?></label>
-                <div data-mpf-password-strength="password"><div data-mpf-password-strength-meter="password" class="mpfStrengthLow">strength</div></div>
+                <div data-mpf-password-strength="password"><div data-mpf-password-strength-meter="password" class="mpfStrengthLow">&nbsp;</div></div>
                 <div data-mpf-tooltip="passwordStrength">
                     <label><img src="/mpf-admin/images/icons/16x16/information.png" width="16" height="16" alt="i" /></label>
                     <section>
@@ -39,10 +39,10 @@ $template->startContent();
                     </section>
                 </div>
             </div>
-            <div class="newUser"><label for="passwordConfirm"><?= $loginText->get('passwordConfirm') ?></label><input type="password" name="passwordConfirm" id="passwordConfirm" /></div>
+            <div class="newUser"><label for="passwordConfirm"><?= $loginText->get('passwordConfirm') ?></label><input type="password" name="passwordConfirm" id="passwordConfirm" tabindex="3" /></div>
             <? if ($totalUsers != 1): ?><p class="existingUser"><?= $loginText->get('passwordLost') ?></p><? endif; ?>
-            <div><label for="new"><?= $loginText->get('newUser') ?></label><input type="checkbox" name="new" id="new" <? if ($totalUsers == 1): ?>checked="checked" disabled="disabled" <? endif; ?>/></div>
-            <input type="submit" value="<?= $loginText->get('submit') ?>" class="gradientGreen" />
+            <div><label for="new"><?= $loginText->get('newUser') ?></label><input type="checkbox" name="new" id="new" <? if ($totalUsers == 1): ?>checked="checked" disabled="disabled" <? endif; ?> /></div>
+            <input type="submit" value="<?= $loginText->get('submit') ?>" class="gradientGreen" tabindex="4" />
         </fieldset>
     </form>
 <? $template->stopContent();
