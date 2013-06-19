@@ -183,7 +183,7 @@ class REST {
     }
 
     private static function getParts() {
-        $requestUri = filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_URL);
+        $requestUri = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
         $requestUri = str_replace(self::$basePath, '', $requestUri);
         $servicePath = str_replace(array('?', $_SERVER['QUERY_STRING']), '', $requestUri);
         $options = preg_split("@\/@", $servicePath, -1, PREG_SPLIT_NO_EMPTY);

@@ -1,8 +1,9 @@
+<?php $MPF_INFO = json_decode(file_get_contents(PATH_MPF_CORE.'bucket.json'), true); ?>
 <header>
     <? if (\MPF\User::bySession()): ?>
     <div class="loggedUser">
         <section>
-            <span><?= \MPF\User::bySession()->getUsername() ?></span>
+            <span><?= \MPF\User::bySession()->getUsername() ?>, #<?= \MPF\User::bySession()->getId() ?></span>
             <a href="/mpf-admin/rest/user/<?= \MPF\User::bySession()->getUsername() ?>/logout/?redirect=/mpf-admin/login.php" class="gradientBlueNoise"><?= $this->getText('logout', 'layout'); ?></a>
         </section>
     </div>
@@ -12,6 +13,7 @@
             <h1><a href="/" title="Logo made by Xavier Lebel">MyPhpFramework</a></h1>
         </section>
         <h2><?= $this->getText('title', 'layout') ?></h2>
+        <div id="version">MPF v<?= $MPF_INFO['version']; ?><em>Environment: <?= \MPF\ENV::getType(); ?></em></div>
         <br style="clear:both" />
     </div>
 </header>

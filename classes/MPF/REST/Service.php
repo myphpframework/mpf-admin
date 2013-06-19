@@ -84,7 +84,7 @@ abstract class Service {
      * @param string $action
      */
     public function execute($id, $action) {
-        $method = strtoupper(filter_input(\INPUT_SERVER, 'REQUEST_METHOD', \FILTER_SANITIZE_STRING));
+        $method = strtoupper(filter_var($_SERVER['REQUEST_METHOD'], \FILTER_SANITIZE_STRING));
         Logger::Log('Service', $method .' :: '. $id .' :: '. $action, Logger::LEVEL_DEBUG, Logger::CATEGORY_FRAMEWORK | Logger::CATEGORY_SERVICE);
 
         // if we have an action we validate it and call the proper function
@@ -220,7 +220,7 @@ abstract class Service {
      * @param array $requiredFields
      */
     protected function validate($acceptedMethods, $requiredFields) {
-        $method = strtoupper(filter_input(\INPUT_SERVER, 'REQUEST_METHOD', \FILTER_SANITIZE_STRING));
+        $method = strtoupper(filter_var($_SERVER['REQUEST_METHOD'], \FILTER_SANITIZE_STRING));
 
         if (!in_array($method, $acceptedMethods)) {
             self::setResponseCode(self::HTTPCODE_METHOD_NOT_ALLOWED);

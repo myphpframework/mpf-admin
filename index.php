@@ -2,8 +2,9 @@
 
 use MPF\ENV;
 use MPF\Text;
+use MPF\Config;
 
-$MPF_INFO = json_decode(file_get_contents(PATH_MPF_CORE.'bucket.json'), true);
+$config = Config::get('settings');
 
 $cssFiles[] = '/mpf-admin/css/overview.css';
 $jsFiles[] = '/mpf-admin/js/overview.js';
@@ -52,7 +53,7 @@ $template->startContent(); ?>
     </section>
 
     <section>
-        <h4>users</h4>
+        <h4>Users</h4>
         <ul>
             <li>
                 <label>Test</label>
@@ -97,3 +98,5 @@ $template->startContent(); ?>
 
 <? $template->stopContent();
 echo $template->parse();
+var_dump($config);
+var_dump(\MPF\ENV::getType());

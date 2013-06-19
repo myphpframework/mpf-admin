@@ -23,6 +23,8 @@ $(document).ready(function () {
 
     $('#new:checked').each(function (index, element) {
        $('.newUser').slideDown();
+       $('#passwordConfirm').validate('required passwordConfirm');
+       $('#password').validate('required passwordStrength password', 'keyup');
     });
 
     $('#username').focus();
