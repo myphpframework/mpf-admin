@@ -1,0 +1,4 @@
+
+RewriteEngine On
+RewriteCond %{REQUEST_URI} media/[0-9]+\.[0-9]+\.[0-9]+ [NC]
+RewriteRule ^[0-9]+\.[0-9]+\.[0-9]+(.+)$ /mpf-admin/media/$1 [L]

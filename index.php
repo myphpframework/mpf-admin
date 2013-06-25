@@ -4,10 +4,24 @@ use MPF\ENV;
 use MPF\Text;
 use MPF\Config;
 
-$config = Config::get('settings');
+$settings = Config::get('settings');
 
-$cssFiles[] = '/mpf-admin/css/overview.css';
-$jsFiles[] = '/mpf-admin/js/overview.js';
+$cssFiles[] = '/mpf-admin/media/css/overview.css';
+$jsFiles[] = '/mpf-admin/media/js/overview.js';
+
+
+function keyValue($key, $settings) { ?>
+    <h5><?= $key ?></h5>
+    <ul>
+        <? foreach ((array)$settings as $k => $v):  if (is_object($v) || is_array($v)) { keyValue($k, $v); continue; } ?>
+        <li>
+            <label><?= $k ?></label>
+            <span><?= $v ?></span>
+        </li>
+        <? endforeach; ?>
+    </ul>
+<?php
+}
 
 $template = MPF\Template::getFile('layout');
 $template->startContent(); ?>
@@ -15,18 +29,13 @@ $template->startContent(); ?>
     <section>
         <h4>Settings</h4>
         <ul>
+            <? foreach ($settings as $key => $setting): ?>
             <li>
-                <label>Default Local</label>
-                <span>en_CA</span>
+                <? if (is_object($setting)) { keyValue($key, $setting); continue; } ?>
+                <label><?= $key ?></label>
+                <span><?= $setting ?></span>
             </li>
-            <li>
-                <label>Logs</label>
-                <span>Disabled</span>
-            </li>
-            <li>
-                <label>Cache</label>
-                <span>Disabled</span>
-            </li>
+            <? endforeach; ?>
         </ul>
     </section>
 
@@ -98,5 +107,3 @@ $template->startContent(); ?>
 
 <? $template->stopContent();
 echo $template->parse();
-var_dump($config);
-var_dump(\MPF\ENV::getType());

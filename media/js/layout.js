@@ -33,14 +33,14 @@ $(document).ready(function () {
     $('.handle img', $menu).click(function (event, options) {
         if ($('ul:visible', $menu).length > 0) {
             $('ul', $menu).slideUp(function () {
-                $('div.handle > img', $menu).prop('src', '/mpf-admin/images/icons/32x32/grayArrowDown.png');
+                $('div.handle > img', $menu).prop('src', '/mpf-admin/media/images/icons/32x32/grayArrowDown.png');
                 if (options && options.hasOwnProperty('url')) {
                     document.location.href=options.url;
                 }
             });
         } else {
             $('ul', $menu).slideDown(function () {
-                $('div.handle > img', $menu).prop('src', '/mpf-admin/images/icons/32x32/grayArrowUp.png');
+                $('div.handle > img', $menu).prop('src', '/mpf-admin/media/images/icons/32x32/grayArrowUp.png');
             });
         }
     });
@@ -63,7 +63,7 @@ $(document).ready(function () {
             $('form,input,select,textarea').on('error', function(event, errorMsg) {
                 var $element = $(this), $form = $element.closest('form'), $label = $('label[for="' + $element.attr('name') + '"]', $form);
                 $('[data-form-error-img="' + $element.attr('name') + '"]', $form).remove();
-                $label.after('<img src="/mpf-admin/images/icons/16x16/error.png" width="16" height="16" data-form-error-img="' + $element.attr('name') + '" alt="error icon" title="' + errorMsg + '" />');
+                $label.after('<img src="/mpf-admin/media/images/icons/16x16/error.png" width="16" height="16" data-form-error-img="' + $element.attr('name') + '" alt="error icon" title="' + errorMsg + '" />');
 
                 if ($('ul.error li', $form).length === 1) {
                     $('ul.error li', $form).addClass('singleError');

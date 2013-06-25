@@ -131,7 +131,7 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
                 return;
             }
 
-            mpf.ajaxGet('/mpf-admin/js/mpfResourcesInfo.json', function (errors, result) {
+            mpf.ajaxGet('/mpf-admin/media/js/mpfResourcesInfo.json', function (errors, result) {
                 var i = '';
                 if (errors) {
                     throw new Error(errors[0].msg);
@@ -173,7 +173,7 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
         loadMpfResourcesInfo(function (mpfResourcesInfo) {
             var dir = '';
             if (!mpfResourcesInfo.hasOwnProperty(id)) {
-                throw new Error('Could not find any package information for "'+ id +'", make sure its in the /js/mpfResourcesInfo.json and that you have flushed localstorage for the key "mpfResourcesInfo".');
+                throw new Error('Could not find any package information for "'+ id +'", make sure its in the /media/js/mpfResourcesInfo.json and that you have flushed localstorage for the key "mpfResourcesInfo".');
             }
 
             if (mpfResourcesInfo[id].hasOwnProperty('dir')) {
@@ -190,12 +190,12 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
 
                     // load css third if any
                     if (mpfResourcesInfo[id].resources.indexOf('css') !== -1) {
-                        $('<link rel="stylesheet" type="text/css" href="/mpf-admin/css/'+ dir + id +'.css" />').appendTo('head');
+                        $('<link rel="stylesheet" type="text/css" href="/mpf-admin/media/'+ mpfResourcesInfo[id].version +'/css/'+ dir + id +'.css" />').appendTo('head');
                     }
 
                     // load js last if any
                     if (mpfResourcesInfo[id].resources.indexOf('js') !== -1) {
-                        $.getScript('/mpf-admin/js/'+ dir + id +'.js', function () {
+                        $.getScript('/mpf-admin/media/'+ mpfResourcesInfo[id].version +'/js/'+ dir + id +'.js', function () {
                             if (typeof callback === 'function') {
                                 callback();
                             }

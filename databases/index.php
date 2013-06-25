@@ -5,8 +5,8 @@ use MPF\Text;
 
 $MPF_INFO = json_decode(file_get_contents(PATH_MPF_CORE.'bucket.json'), true);
 
-$cssFiles[] = '/mpf-admin/css/overview.css';
-$jsFiles[] = '/mpf-admin/js/overview.js';
+$cssFiles[] = '/mpf-admin/media/css/overview.css';
+$jsFiles[] = '/mpf-admin/media/js/overview.js';
 
 $template = MPF\Template::getFile('layout');
 $template->startContent(); ?>

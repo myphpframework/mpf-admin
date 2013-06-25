@@ -103,7 +103,7 @@ form [data-form-error-img] {
 form ul.error {
     margin: 1em 0;
     list-style: none;
-    background: #FFEEED url('/mpf-admin/images/icons/32x32/error.png') no-repeat 16px;
+    background: #FFEEED url('/mpf-admin/media/images/icons/32x32/error.png') no-repeat 16px;
     padding: 4px 4px 4px 52px;
     min-height: 32px;
     border: 1px dashed #999;

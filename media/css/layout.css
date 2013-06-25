@@ -26,7 +26,7 @@ body > header h1 {
 }
 
 body > header h1 a {
-    background: url("/mpf-admin/images/logo_small_white.png") no-repeat scroll 0 0 transparent;
+    background: url("/mpf-admin/media/images/logo_small_white.png") no-repeat scroll 0 0 transparent;
     width: 101px;
     height: 50px;
     display: block;
@@ -244,14 +244,15 @@ body > nav > div.handle img {
     background: linear-gradient(to bottom,  #f7f7f7 0%,#e0e0e0 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#e0e0e0',GradientType=0 ); /* IE6-9 */
 
-    -moz-box-shadow:    inset 0 1px 0 #FFF, 0 0 3px #999;
-    -webkit-box-shadow: inset 0 1px 0 #FFF, 0 0 3px #999;
-    box-shadow:         inset 0 1px 0 #FFF, 0 0 3px #999;
+    -moz-box-shadow:    inset -1px 1px 0 #FFF, 0 0 3px #999;
+    -webkit-box-shadow: inset -1px 1px 0 #FFF, 0 0 3px #999;
+    box-shadow:         inset -1px 1px 0 #FFF, 0 0 3px #999;
 
     margin: 8px;
     padding: 8px;
     float: left;
     width: 200px;
+    overflow: hidden;
 }
 
 #page > section > h4 {
@@ -262,9 +263,15 @@ body > nav > div.handle img {
     padding: 0;
 }
 
+#page > section h5 {
+    font-family: verdana;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
 
 p.information {
-    background: #FFF8C4 url('/mpf-admin/images/icons/32x32/information.png') no-repeat 16px;
+    background: #FFF8C4 url('/mpf-admin/media/images/icons/32x32/information.png') no-repeat 16px;
     padding: 8px 8px 8px 52px;
     min-height: 32px;
     font-size: 14px;
@@ -408,7 +415,7 @@ p.information {
     position: absolute;
     top: 0;
     left: 16px;
-    background: rgba(6, 7, 43, 0.7) url(/mpf-admin/images/noise2.png);
+    background: rgba(6, 7, 43, 0.7) url(/mpf-admin/media/images/noise2.png);
     padding: 8px;
     z-index: 1400;
 
@@ -428,7 +435,7 @@ p.information {
 [data-mpf-tooltip] > span {
     display:none;
     position:absolute;
-    background: rgba(6, 7, 43, 0.9) url(/mpf-admin/images/noise2.png);
+    background: rgba(6, 7, 43, 0.9) url(/mpf-admin/media/images/noise2.png);
     height: 15px;
     width: 15px;
     left: 20px;

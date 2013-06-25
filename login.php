@@ -10,9 +10,9 @@ if (\MPF\User::bySession()) {
 
 $totalUsers = User::getTotalEntries();
 
-$cssFiles[] = '/mpf-admin/css/forms.css';
-$cssFiles[] = '/mpf-admin/css/login.css';
-$jsFiles[] = '/mpf-admin/js/login.js';
+$cssFiles[] = '/mpf-admin/media/css/forms.css';
+$cssFiles[] = '/mpf-admin/media/css/login.css';
+$jsFiles[] = '/mpf-admin/media/js/login.js';
 
 $loginText = Text::byXml('login');
 $template = MPF\Template::getFile('layout');
@@ -31,7 +31,7 @@ $template->startContent();
                 <label><?= $loginText->get('passwordStrength') ?></label>
                 <div data-mpf-password-strength="password"><div data-mpf-password-strength-meter="password" class="mpfStrengthLow">&nbsp;</div></div>
                 <div data-mpf-tooltip="passwordStrength">
-                    <label><img src="/mpf-admin/images/icons/16x16/information.png" width="16" height="16" alt="i" /></label>
+                    <label><img src="/mpf-admin/media/images/icons/16x16/information.png" width="16" height="16" alt="i" /></label>
                     <section>
                         <h5><?= $loginText->get('passwordStrengthTitle') ?></h5>
                         <hr />

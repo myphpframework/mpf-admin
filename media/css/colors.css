@@ -4,7 +4,7 @@ body {
 }
 
 body > header {
-    background-image: url(/mpf-admin/images/headerbg.png);
+    background-image: url(/mpf-admin/media/images/headerbg.png);
 }
 
 #page > h3 {
@@ -197,7 +197,7 @@ form > fieldset [data-mpf-password-strength-meter].mpfStrengthHigh {
 }
 
 [data-mpf-overlay] {
-    background: rgba(9, 11, 61, 0.6) url(/mpf-admin/images/noise2.png);
+    background: rgba(9, 11, 61, 0.6) url(/mpf-admin/media/images/noise2.png);
 }
 [data-mpf-overlay] > section {
     background-color: white;
@@ -213,13 +213,13 @@ form > fieldset [data-mpf-password-strength-meter].mpfStrengthHigh {
 }
 
 [data-mpf-overlay] > section > header {
-    background: url(/mpf-admin/images/noise.png), #6b7eb8; /* Old browsers */
-    background: url(/mpf-admin/images/noise.png), -moz-linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* FF3.6+ */
-    background: url(/mpf-admin/images/noise.png), -webkit-gradient(linear, left top, left bottom, color-stop(0%, #6b7eb8), color-stop(100%, #4e5b85)); /* Chrome,Safari4+ */
-    background: url(/mpf-admin/images/noise.png), -webkit-linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* Chrome10+,Safari5.1+ */
-    background: url(/mpf-admin/images/noise.png), -o-linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* Opera 11.10+ */
-    background: url(/mpf-admin/images/noise.png), -ms-linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* IE10+ */
-    background: url(/mpf-admin/images/noise.png), linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* W3C */
+    background: url(/mpf-admin/media/images/noise.png), #6b7eb8; /* Old browsers */
+    background: url(/mpf-admin/media/images/noise.png), -moz-linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* FF3.6+ */
+    background: url(/mpf-admin/media/images/noise.png), -webkit-gradient(linear, left top, left bottom, color-stop(0%, #6b7eb8), color-stop(100%, #4e5b85)); /* Chrome,Safari4+ */
+    background: url(/mpf-admin/media/images/noise.png), -webkit-linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* Chrome10+,Safari5.1+ */
+    background: url(/mpf-admin/media/images/noise.png), -o-linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* Opera 11.10+ */
+    background: url(/mpf-admin/media/images/noise.png), -ms-linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* IE10+ */
+    background: url(/mpf-admin/media/images/noise.png), linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6b7eb8', endColorstr='#4e5b85',GradientType=0 ); /* IE6-9 */
 
     border-top: 1px solid #a1b4d8;
@@ -240,13 +240,13 @@ a.gradientBlueNoise, input.gradientBlueNoise {
 }
 
 .gradientBlueNoise {
-    background: url(/mpf-admin/images/noise.png), #6b7eb8; /* Old browsers */
-    background: url(/mpf-admin/images/noise.png), -moz-linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* FF3.6+ */
-    background: url(/mpf-admin/images/noise.png), -webkit-gradient(linear, left top, left bottom, color-stop(0%, #6b7eb8), color-stop(100%, #4e5b85)); /* Chrome,Safari4+ */
-    background: url(/mpf-admin/images/noise.png), -webkit-linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* Chrome10+,Safari5.1+ */
-    background: url(/mpf-admin/images/noise.png), -o-linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* Opera 11.10+ */
-    background: url(/mpf-admin/images/noise.png), -ms-linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* IE10+ */
-    background: url(/mpf-admin/images/noise.png), linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* W3C */
+    background: url(/mpf-admin/media/images/noise.png), #6b7eb8; /* Old browsers */
+    background: url(/mpf-admin/media/images/noise.png), -moz-linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* FF3.6+ */
+    background: url(/mpf-admin/media/images/noise.png), -webkit-gradient(linear, left top, left bottom, color-stop(0%, #6b7eb8), color-stop(100%, #4e5b85)); /* Chrome,Safari4+ */
+    background: url(/mpf-admin/media/images/noise.png), -webkit-linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* Chrome10+,Safari5.1+ */
+    background: url(/mpf-admin/media/images/noise.png), -o-linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* Opera 11.10+ */
+    background: url(/mpf-admin/media/images/noise.png), -ms-linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* IE10+ */
+    background: url(/mpf-admin/media/images/noise.png), linear-gradient(top,  #6b7eb8 0%, #4e5b85 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6b7eb8', endColorstr='#4e5b85',GradientType=0 ); /* IE6-9 */
 
     border-top: 1px solid #a1b4d8;
@@ -255,13 +255,13 @@ a.gradientBlueNoise, input.gradientBlueNoise {
 a.gradientBlueNoise:hover, input.gradientBlueNoise:hover {
     color: #FFF;
 
-    background: url(/mpf-admin/images/noise.png), #5a6b9c; /* Old browsers */
-    background: url(/mpf-admin/images/noise.png), -moz-linear-gradient(top,  #5a6b9c 0%, #424e6d 100%); /* FF3.6+ */
-    background: url(/mpf-admin/images/noise.png), -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5a6b9c), color-stop(100%,#424e6d)); /* Chrome,Safari4+ */
-    background: url(/mpf-admin/images/noise.png), -webkit-linear-gradient(top,  #5a6b9c 0%,#424e6d 100%); /* Chrome10+,Safari5.1+ */
-    background: url(/mpf-admin/images/noise.png), -o-linear-gradient(top,  #5a6b9c 0%,#424e6d 100%); /* Opera 11.10+ */
-    background: url(/mpf-admin/images/noise.png), -ms-linear-gradient(top,  #5a6b9c 0%,#424e6d 100%); /* IE10+ */
-    background: url(/mpf-admin/images/noise.png), linear-gradient(top,  #5a6b9c 0%,#424e6d 100%); /* W3C */
+    background: url(/mpf-admin/media/images/noise.png), #5a6b9c; /* Old browsers */
+    background: url(/mpf-admin/media/images/noise.png), -moz-linear-gradient(top,  #5a6b9c 0%, #424e6d 100%); /* FF3.6+ */
+    background: url(/mpf-admin/media/images/noise.png), -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5a6b9c), color-stop(100%,#424e6d)); /* Chrome,Safari4+ */
+    background: url(/mpf-admin/media/images/noise.png), -webkit-linear-gradient(top,  #5a6b9c 0%,#424e6d 100%); /* Chrome10+,Safari5.1+ */
+    background: url(/mpf-admin/media/images/noise.png), -o-linear-gradient(top,  #5a6b9c 0%,#424e6d 100%); /* Opera 11.10+ */
+    background: url(/mpf-admin/media/images/noise.png), -ms-linear-gradient(top,  #5a6b9c 0%,#424e6d 100%); /* IE10+ */
+    background: url(/mpf-admin/media/images/noise.png), linear-gradient(top,  #5a6b9c 0%,#424e6d 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5a6b9c', endColorstr='#424e6d',GradientType=0 ); /* IE6-9 */
 
     border-top: 1px solid #5a6b9c;
@@ -272,13 +272,13 @@ a.gradientBlueNoise:hover, input.gradientBlueNoise:hover {
 .gradientBlueNoiseActive, a.gradientBlueNoise:active, input.gradientBlueNoise:active {
     color: yellow;
 
-    background: url(/mpf-admin/images/noise.png), #4e5b85; /* Old browsers */
-    background: url(/mpf-admin/images/noise.png), -moz-linear-gradient(top,  #4e5b85 0%, #5a6b9c 100%); /* FF3.6+ */
-    background: url(/mpf-admin/images/noise.png), -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4e5b85), color-stop(100%, #5a6b9c)); /* Chrome,Safari4+ */
-    background: url(/mpf-admin/images/noise.png), -webkit-linear-gradient(top,  #4e5b85 0%,#5a6b9c 100%); /* Chrome10+,Safari5.1+ */
-    background: url(/mpf-admin/images/noise.png), -o-linear-gradient(top,  #4e5b85 0% ,#5a6b9c 100%); /* Opera 11.10+ */
-    background: url(/mpf-admin/images/noise.png), -ms-linear-gradient(top,  #4e5b85 0%, #5a6b9c 100%); /* IE10+ */
-    background: url(/mpf-admin/images/noise.png), linear-gradient(top,  #4e5b85 0%, #5a6b9c 100%); /* W3C */
+    background: url(/mpf-admin/media/images/noise.png), #4e5b85; /* Old browsers */
+    background: url(/mpf-admin/media/images/noise.png), -moz-linear-gradient(top,  #4e5b85 0%, #5a6b9c 100%); /* FF3.6+ */
+    background: url(/mpf-admin/media/images/noise.png), -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4e5b85), color-stop(100%, #5a6b9c)); /* Chrome,Safari4+ */
+    background: url(/mpf-admin/media/images/noise.png), -webkit-linear-gradient(top,  #4e5b85 0%,#5a6b9c 100%); /* Chrome10+,Safari5.1+ */
+    background: url(/mpf-admin/media/images/noise.png), -o-linear-gradient(top,  #4e5b85 0% ,#5a6b9c 100%); /* Opera 11.10+ */
+    background: url(/mpf-admin/media/images/noise.png), -ms-linear-gradient(top,  #4e5b85 0%, #5a6b9c 100%); /* IE10+ */
+    background: url(/mpf-admin/media/images/noise.png), linear-gradient(top,  #4e5b85 0%, #5a6b9c 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4e5b85', endColorstr='#5a6b9c',GradientType=0 ); /* IE6-9 */
 
     border-top: 1px solid #5a6b9c;
