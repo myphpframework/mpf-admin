@@ -92,6 +92,9 @@ mpf.validations = {
     },
     email: function (element) {
         if ($(element).val().match(/.{1}@.{2}/)) {
+            if (($(element).val().split("@").length - 1) > 1) {
+                return false;
+            }
             return true;
         }
         return false;
@@ -178,6 +181,14 @@ mpf.validations = {
         }
         return true;
     },
+    name: function (element) {
+        var value = $(element).val().replace(/[^a-zA-Z0-9áãåàâäçéëèêíïìîñóõòôöùûúüýÿßæðøÁÃÅÀÂÄÇÉËÈÊÍÏÌÎÓÕÒÔÖÙÛÚÜÝ?., \-\']/, '');
+        if (element.value !== value || value.length > 25) {
+            element.value = value;
+            return false;
+        }
+        return true;
+    },
     username: function (element) {
         var value = $(element).val().replace(/[^a-zA-Z0-9 \-\'_]/, '');
         if (element.value !== value) {
@@ -186,10 +197,23 @@ mpf.validations = {
         }
         return true;
     },
-    name: function (element) {
-        var value = $(element).val().replace(/[^a-zA-Z0-9áãåàâäçéëèêíïìîñóõòôöùûúüýÿßæðøÁÃÅÀÂÄÇÉËÈÊÍÏÌÎÓÕÒÔÖÙÛÚÜÝ?., \-\']/, '');
-        if (element.value !== value || value.length > 25) {
-            element.value = value;
+    domain: function (element) {
+        var $element = $(element), value = $element.val();
+        if (value.match(/http:\/\//)) {
+            value = value.replace(/http:\/\//, '');
+            $element.val(value);
+        }
+        
+        if (value.match(/https:\/\//)) {
+            value = value.replace(/https:\/\//, '');
+            $element.val(value);
+        }
+
+        if (value != value.replace(/[^a-zA-Z0-9\-_\.]/, '')) {
+            return false;
+        }
+
+        if (!value.match(/([a-zA-Z0-9\-_]+\.)?[a-zA-Z0-9\-_]+\.[a-zA-Z]{2,5}/)) {
             return false;
         }
         return true;
@@ -302,7 +326,7 @@ $.fn.validate = function validate() {
                             isFieldValid &= isValid;
                             isAllValid &= isValid;
 
-                            // we keep try of the checks that failed for this element
+                            // we keep track of the checks that failed for this element
                             if (!isFieldValid) {
                                 invalidChecks.push(check);
                             }

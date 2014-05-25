@@ -6,26 +6,42 @@
     color: green;
 }
 
-#overview > ul {
+#page > section > h4 {
+    margin-bottom: 8px;
+}
+
+section ul {
     list-style: none;
     margin: 0px;
     padding: 0px;
 }
-#overview > ul > li {
+section > ul > li {
     clear:both;
     border-bottom: 1px dotted gray;
     display:block;
     height: 1.25em;
     margin-bottom: 8px;
-    margin-left: 20px;
 }
-#overview > ul > li.error {
+section > ul > li.error {
     height: auto;
 }
-#overview li > label {
-    float: left;
+
+section > ul > li li {
+    clear:both;
+    margin-left: 8px;
+    padding: 4px;
 }
-#overview li > div {
+
+section > ul > li ul {
+    clear:both;
+    margin-left: 8px;
+}
+
+section li > label {
+    float: left;
+    width: 50px;
+}
+section li > span {
     float: left;
     width: 25px;
 }

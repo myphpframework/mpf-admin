@@ -9,7 +9,8 @@ $settings = Config::get('settings');
 $cssFiles[] = '/mpf-admin/media/css/overview.css';
 $jsFiles[] = '/mpf-admin/media/js/overview.js';
 
-
+$template = MPF\Template::getFile('layout');
+/*
 function keyValue($key, $settings) { ?>
     <h5><?= $key ?></h5>
     <ul>
@@ -23,7 +24,7 @@ function keyValue($key, $settings) { ?>
 <?php
 }
 
-$template = MPF\Template::getFile('layout');
+
 $template->startContent(); ?>
 
     <section>
@@ -105,5 +106,7 @@ $template->startContent(); ?>
         </ul>
     </section>
 
-<? $template->stopContent();
+<?
+ */
+$template->stopContent();
 echo $template->parse();

@@ -227,7 +227,7 @@ $('script[src*="mpf.jquery"]').each(function (index, item) {
      * Everytime markup is dynamicly added to the document this function should be called
      * @returns {void}
      */
-    mpf.reloadGlobalEvents = function reloadLayoutBinds() {
+    mpf.reloadGlobalEvents = function reloadGlobalEvents() {
         // Unload the binds
         for (var i in mpf.globalEvents) {
             if (mpf.globalEvents.hasOwnProperty(i)) {
